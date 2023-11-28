@@ -14,6 +14,7 @@ public class Enter : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col){
         if(col.gameObject.tag == "Player") {
             SceneManager.LoadScene("Level");
+            Debug.Log("Entered new room");
         }
 
     }
