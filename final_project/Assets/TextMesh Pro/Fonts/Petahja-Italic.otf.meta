@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: bb1174c1620eb8b40864d81649960969
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Petahja
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 06d84a2b8ac94494faf2e47319d63979, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public Canvas creditCanvas;
+	
+	void Start(){
+		//creditCanvas = .Find("CreditCanvas");
+	}
+	
+	public void OnPlayButton(){
+		SceneManager.LoadScene(1);
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public void OnQuitButton(){
+		Application.Quit();
+	}
+	
+	public void showCredit(){
+		creditCanvas.GetComponent<Canvas>().enabled = true;
+	}
+	
+	public void hideCredit(){
+		creditCanvas.GetComponent<Canvas>().enabled = false;
+	}
+	
 }
