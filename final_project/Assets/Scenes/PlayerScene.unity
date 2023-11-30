@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 652740868}
   - component: {fileID: 652740872}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Necromancer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,7 +276,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9698a4185621f70488ea8eb572edfb2b, type: 3}
+  m_Sprite: {fileID: -80696234, guid: e51cd1dd77864ad4bb7b9d5896907893, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -299,8 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd21e72c93f5dc49b25eefde4418487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rb: {fileID: 652740870}
+  moveSpeed: 2
+  animator: {fileID: 652740872}
 --- !u!50 &652740870
 Rigidbody2D:
   serializedVersion: 4
