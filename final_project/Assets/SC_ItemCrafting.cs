@@ -57,7 +57,7 @@ public class SC_ItemCrafting : MonoBehaviour
 		// setup result slot element template
 		resultSlotTemplate.container.rectTransform.pivot = new Vector2(0, 1);
 		resultSlotTemplate.container.rectTransform.anchorMax = resultSlotTemplate.container.rectTransform.anchorMin = new Vector2(0, 1);
-		resultSlotTEmplate.craftingController = this;
+		resultSlotTemplate.craftingController = this;
 		resultSlotTemplate.gameObject.SetActive(false);
 		
 		// attach click event to craft button
@@ -80,7 +80,7 @@ public class SC_ItemCrafting : MonoBehaviour
 		
 		// reset slot element template (used later for hovering element)
 		slotTemplate.container.rectTransform.pivot = new Vector2(0.5f, 0.5f);
-		slotTempate.container.raycastTarget = slotTemplate.item.raycastTarget = slotTemplate.count.raycastTarget = false;
+		slotTemplate.container.raycastTarget = slotTemplate.item.raycastTarget = slotTemplate.count.raycastTarget = false;
 	}
 	
 	void InitializeSlotTable(RectTransform container, SC_SlotTemplate slotTemplateTmp, SlotContainer[] slots, int margin, int tableIDTmp){
@@ -210,7 +210,7 @@ public class SC_ItemCrafting : MonoBehaviour
 									Item slotItem = FindItem(selectedItemSlot.itemSprite);
 									if (slotItem.stackable){
 										selectedItemSlot.itemSprite = null;
-										newClickedSlot.itemCount += selectedItem.itemCount;
+										newClickedSlot.itemCount += selectedItemSlot.itemCount;
 										selectedItemSlot.itemCount = 0;
 									}
 									else{
@@ -266,4 +266,91 @@ public class SC_ItemCrafting : MonoBehaviour
 	}
 	
 	// START AT SlotContainer GetClickedSlot()
+	SlotContainer GetClickedSlot(){
+		for (int i = 0; i < playerSlots.Length; i++){
+			if (playerSlots[i].slot.hasClicked){
+				playerSlots[i].slot.hasClicked = false;
+				return playerSlots[i];
+			}
+		}
+		
+		for (int i = 0; i < craftSlots.Length; i++){
+			if (craftSlots[i].slot.hasClicked){
+				craftSlots[i].slot.hasClicked = false;
+				return craftSlots[i];
+			}
+		}
+		
+		if (resultSlot.slot.hasClicked){
+			resultSlot.slot.hasClicked = false;
+			return resultSlot;
+		}
+		
+		return null;
+	}
+	
+	void PerformCrafting(){
+		string[] combinedItemRecipe = new string[craftSlots.Length];
+		
+		craftButton.colors = defaultButtonColors;
+		
+		for (int i = 0; i < craftSlots.Length; i++){
+			Item slotItem = FindItem(craftSlots[i].itemSprite);
+			if (slotItem != null){
+				combinedItemRecipe[i] = slotItem.itemSprite.name + (craftSlots[i].itemCount > 1 ? "(" + craftSlots[i].itemCount + ")" : "" );
+			}
+			else {
+				combinedItemRecipe[i] = "";
+			}
+		}
+		
+		string combinedRecipe = string.Join(",", combinedItemRecipe);
+		print(combinedRecipe);
+		
+		// search if recipe match any of the tiem recipe
+		Item craftedItem = FindItem(combinedRecipe);
+		if (craftedItem != null){
+			// clear craft slots
+			for (int i = 0; i < craftSlots.Length; i++){
+				craftSlots[i].itemSprite = null;
+				craftSlots[i].itemCount = 0;
+			}
+			resultSlot.itemSprite = craftedItem.itemSprite;
+			resultSlot.itemCount = 1;
+			
+			UpdateItems(craftSlots);
+			UpdateItems(new SlotContainer[] {resultSlot});
+		}
+		else {
+			ColorBlock colors = craftButton.colors;
+			colors.selectedColor = colors.pressedColor = new Color(0.8f, 0.55f, 0.55f, 1);
+			craftButton.colors = colors;
+		}
+	}
+	
+	void Update(){
+		// slot UI follow mouse position
+		if (selectedItemSlot != null){
+			if (!slotTemplate.gameObject.activeSelf){
+				slotTemplate.gameObject.SetActive(true);
+				slotTemplate.container.enabled = false;
+				
+				//copy selected item values to slot template
+				slotTemplate.count.color = selectedItemSlot.slot.count.color;
+				slotTemplate.item.sprite = selectedItemSlot.slot.item.sprite;
+				slotTemplate.item.color = selectedItemSlot.slot.item.color;
+			}
+		
+			// make template slot follow mouse position
+			slotTemplate.container.rectTransform.position = Input.mousePosition;
+			//update item count
+			slotTemplate.count.text = selectedItemSlot.slot.count.text;
+			slotTemplate.count.enabled = selectedItemSlot.slot.count.enabled;
+		}
+		else {
+			if (slotTemplate.gameObject.activeSelf){
+				slotTemplate.gameObject.SetActive(false);
+			}
+		}
+	}
 }
