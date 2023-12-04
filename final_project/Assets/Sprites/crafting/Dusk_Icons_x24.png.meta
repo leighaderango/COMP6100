@@ -317,7 +317,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dusk_Icons_x24_10
+      name: a_fabric
       rect:
         serializedVersion: 2
         x: 240
@@ -2522,7 +2522,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dusk_Icons_x24_115
+      name: a_sword_gold
       rect:
         serializedVersion: 2
         x: 72
@@ -5493,7 +5493,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dusk_Icons_x24_10: 403117854
       Dusk_Icons_x24_100: 1891453830
       Dusk_Icons_x24_101: 2037801429
       Dusk_Icons_x24_102: 715925518
@@ -5508,7 +5507,6 @@ TextureImporter:
       Dusk_Icons_x24_110: -1577278003
       Dusk_Icons_x24_111: 456434452
       Dusk_Icons_x24_113: 1668735043
-      Dusk_Icons_x24_115: -1140489266
       Dusk_Icons_x24_116: -1143584917
       Dusk_Icons_x24_117: -873368014
       Dusk_Icons_x24_118: -1525973032
@@ -5727,6 +5725,7 @@ TextureImporter:
       Dusk_Icons_x24_99: 69814522
       a_bone_white: 1556572164
       a_bone_yellow: 2134575481
+      a_fabric: 403117854
       a_gem_blue_four: -2135946367
       a_gem_gold_long: -1770001772
       a_gem_green_hex: 879951567
@@ -5740,6 +5739,7 @@ TextureImporter:
       a_sword_1: -1632528872
       a_sword_2: 1156448570
       a_sword_3: 1047004037
+      a_sword_gold: -1140489266
       armorbody_1: -484647458
       armorbody_green: -75129600
       armorbody_purple: -214266409

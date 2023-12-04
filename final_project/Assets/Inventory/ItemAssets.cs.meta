@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: c4e1f3b066fb1384ab84174e247159f8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - pfItemWorld: {fileID: 5082684234790811255, guid: f3513ad9a81b7684f8bfcbfc3b0e79c9, type: 3}
+  - YellowBoneSprite: {fileID: 2134575481, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - GreenGemSprite: {fileID: -2026989328, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - BlueGreenGemSprite: {fileID: 879951567, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - PurpleGemSprite: {fileID: 608146661, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - SilverGemSprite: {fileID: 2051571587, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - GoldMetalSprite: {fileID: -591728373, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - SilverMetalSprite: {fileID: -343138978, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - FabricSprite: {fileID: 403117854, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Sword_1Sprite: {fileID: -1632528872, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Sword_2Sprite: {fileID: -1140489266, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Sword_3Sprite: {fileID: 1156448570, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Armorbody_1Sprite: {fileID: -484647458, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Armorhat_1Sprite: {fileID: -70838762, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Armorbody_2Sprite: {fileID: -75129600, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Armorhat_2Sprite: {fileID: 2070226094, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Armorbody_3Sprite: {fileID: -214266409, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - Armorhat_3Sprite: {fileID: -1789400270, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - SilverPotionSprite: {fileID: -1413179560, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  - GreenPotionSprite: {fileID: -2131658453, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
