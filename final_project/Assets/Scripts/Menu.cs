@@ -6,10 +6,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
 	public Canvas creditCanvas;
-	
-	void Start(){
-		//creditCanvas = .Find("CreditCanvas");
-	}
+	public Canvas bookCanvas;
 	
 	public void OnPlayButton(){
 		SceneManager.LoadScene(1);
@@ -25,6 +22,14 @@ public class Menu : MonoBehaviour
 	
 	public void hideCredit(){
 		creditCanvas.GetComponent<Canvas>().enabled = false;
+	}
+	
+	public void showBook(){
+		bookCanvas.GetComponent<Canvas>().enabled = true;
+	}
+	
+	public void hideBook(){
+		bookCanvas.GetComponent<Canvas>().enabled = false;
 	}
 	
 }
