@@ -10,11 +10,14 @@ public class PlayerMovement : MonoBehaviour
 	private Animator anim;
 	private Inventory inventory;
 	[SerializeField] private UI_Inventory uiInventory;
+
+	bool roll = false;
 	
 
     void Start()
     {
 		playerSR = GetComponent<SpriteRenderer>();
+		anim = GetComponent<Animator>();
         inventory = new Inventory();
 		uiInventory.SetInventory(inventory);
 		
@@ -28,17 +31,18 @@ public class PlayerMovement : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-		anim.SetFloat("Speed", Mathf.Abs(speed));
-
 		if(h < 0) {
 			playerSR.flipX = true;
 		}else if(h > 0) {
-			playerSR.flipY = false;
-		}
+			playerSR.flipX = false;
+		}	
 
+		anim.SetFloat("Speed", Mathf.Abs(h*speed));
+
+		// Set y axis animation to run here
+		
         GetComponent<Rigidbody2D>().velocity = new Vector2 (h*speed, v*speed);
     }
-	
 
 	private void OnTriggerEnter2D(Collider2D collider){
 		ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
