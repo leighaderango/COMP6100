@@ -32,6 +32,7 @@ public class DungeonGeneration : MonoBehaviour
         // printDungeon();
         GameObject roomObj = (GameObject)Instantiate(Resources.Load(roomPrefab));
         Debug.Log(roomPrefab);
+        printDungeon();
     }
 
     private Room GenerateDungeon(){
