@@ -12,12 +12,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        inventory = new Inventory();
+        inventory = new Inventory(UseItem);
 		uiInventory.SetInventory(inventory);
 		
-		ItemWorld.SpawnItemWorld(new Vector3(5,0), new Item {itemType = Item.ItemType.YellowBone, amount = 1});
-		ItemWorld.SpawnItemWorld(new Vector3(-5,0), new Item {itemType = Item.ItemType.GreenGem, amount = 1});
-		ItemWorld.SpawnItemWorld(new Vector3(0,0), new Item {itemType = Item.ItemType.BlueGreenGem, amount = 1});
     }
 
     void FixedUpdate()
@@ -34,6 +31,19 @@ public class PlayerMovement : MonoBehaviour
 		if (itemWorld != null){
 			inventory.AddItem(itemWorld.GetItem());
 			itemWorld.DestroySelf();
+		}
+	}
+	
+	private void UseItem(Item item){
+		switch (item.itemType){
+		case Item.ItemType.SilverPotion:
+			//FlashBlue();
+			inventory.RemoveItem(new Item {itemType = Item.ItemType.SilverPotion, amount = 1});
+			break;
+		case Item.ItemType.GreenPotion:
+			//FlashGreen();
+			inventory.RemoveItem(new Item {itemType = Item.ItemType.GreenPotion, amount = 1});
+			break;
 		}
 	}
 }

@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
 public class Item{
+
 	
 	public enum ItemType {
 		YellowBone,
@@ -30,6 +33,7 @@ public class Item{
 	public int amount;
 	
 	public Sprite GetSprite(){
+
 		switch (itemType){
 		default:
 		case ItemType.YellowBone: 	return ItemAssets.Instance.YellowBoneSprite;
