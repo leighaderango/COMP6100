@@ -30,9 +30,11 @@ public class UI_Inventory : MonoBehaviour
 			if (child == itemSlotTemplate) continue;
 			Destroy(child.gameObject);
 		}
+		
 		int x = 0;
 		int y = 0;
 		float itemSlotCellSize = 60f;
+		
 		foreach (Item item in inventory.GetItemList()){
 			// instantiate item slot
 			RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();

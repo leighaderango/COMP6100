@@ -24,7 +24,7 @@ MonoImporter:
   - Armorhat_3Sprite: {fileID: -1789400270, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
   - SilverPotionSprite: {fileID: -1413179560, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
   - GreenPotionSprite: {fileID: -2131658453, guid: 1bd0dcc3018c88d4c9d7e140c40004d7, type: 3}
-  executionOrder: 30
+  executionOrder: 14
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

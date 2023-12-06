@@ -18,12 +18,9 @@ public class PlayerMovement : MonoBehaviour
     {
 		playerSR = GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
-        inventory = new Inventory();
+        inventory = new Inventory(UseItem);
 		uiInventory.SetInventory(inventory);
 		
-		ItemWorld.SpawnItemWorld(new Vector3(5,0), new Item {itemType = Item.ItemType.YellowBone, amount = 1});
-		ItemWorld.SpawnItemWorld(new Vector3(-5,0), new Item {itemType = Item.ItemType.GreenGem, amount = 1});
-		ItemWorld.SpawnItemWorld(new Vector3(0,0), new Item {itemType = Item.ItemType.BlueGreenGem, amount = 1});
     }
 
     void FixedUpdate()
@@ -50,5 +47,9 @@ public class PlayerMovement : MonoBehaviour
 			inventory.AddItem(itemWorld.GetItem());
 			itemWorld.DestroySelf();
 		}
+	}
+	
+	private void UseItem(Item item){
+		// controls what happens when item is used
 	}
 }
