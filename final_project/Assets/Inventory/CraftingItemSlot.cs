@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CraftingItemSlot : MonoBehaviour, IDropHandler {
-	
+
 	public void OnDrop(PointerEventData eventData){
-		//Debug.Log("OnDrop");
+		
 		if (eventData.pointerDrag != null){
-			eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+			eventData.pointerDrag.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
 		}
 	}
 

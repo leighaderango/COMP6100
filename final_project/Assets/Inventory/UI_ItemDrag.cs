@@ -10,7 +10,7 @@ public class UI_ItemDrag : MonoBehaviour {
 
     public static UI_ItemDrag Instance { get; private set; }
 
-    private Canvas canvas;
+    //private Canvas canvas;
     private RectTransform rectTransform;
     private RectTransform parentRectTransform;
     private CanvasGroup canvasGroup;
@@ -23,9 +23,9 @@ public class UI_ItemDrag : MonoBehaviour {
 
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-        canvas = GetComponentInParent<Canvas>();
+        //canvas = GetComponentInParent<Canvas>();
 		spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-        amountText = transform.Find("Text").GetComponent<TextMeshProUGUI>();
+        amountText = transform.Find("AmountText").GetComponent<TextMeshProUGUI>();
         parentRectTransform = transform.parent.GetComponent<RectTransform>();
 
         Hide();

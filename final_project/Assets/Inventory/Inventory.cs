@@ -11,9 +11,11 @@ public class Inventory{
 	
 	public Inventory(Action<Item> useItemAction){
 		this.useItemAction = useItemAction;
+		
+		// initialize empty list of Items
 		itemList = new List<Item>();
 
-		
+		// gives player a base inventory (DELETE LATER)
 		AddItem(new Item {itemType = Item.ItemType.YellowBone, amount = 1});
 		AddItem(new Item {itemType = Item.ItemType.GreenGem, amount = 1});
 		AddItem(new Item {itemType = Item.ItemType.BlueGreenGem, amount = 1});
@@ -21,10 +23,11 @@ public class Inventory{
 		AddItem(new Item {itemType = Item.ItemType.SilverGem, amount = 1});
 		AddItem(new Item {itemType = Item.ItemType.GoldMetal, amount = 1});
 		AddItem(new Item {itemType = Item.ItemType.SilverMetal, amount = 1});
-		AddItem(new Item {itemType = Item.ItemType.Fabric, amount = 1});
+		AddItem(new Item {itemType = Item.ItemType.Fabric, amount = 11});
 
 	}
 	
+	// adds item to existing inventory
 	public void AddItem(Item item){
 		if (item.IsStackable()){
 			bool itemAlreadyInInventory = false;
@@ -41,7 +44,6 @@ public class Inventory{
 		} else {
 			itemList.Add(item);
 		}
-		
 		OnItemListChanged?.Invoke(this, EventArgs.Empty);
 	}
 	
