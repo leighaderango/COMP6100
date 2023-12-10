@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 1.0f;
+	private Vector2 moveInput;
 	private SpriteRenderer playerSR;
 	private Animator anim;
 	
@@ -12,10 +13,7 @@ public class PlayerMovement : MonoBehaviour
 	private Inventory inventory;
 	[SerializeField] private UI_Inventory uiInventory;
 
-	bool roll = false;
-	
-
-    void Awake()
+    void Start()
     {
 		playerSR = GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
@@ -28,20 +26,20 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-
-		if(h < 0) {
+		moveInput.x = Input.GetAxisRaw("Horizontal");
+	   	moveInput.y = Input.GetAxisRaw("Vertical");
+	
+		if(moveInput.x < 0) {
 			playerSR.flipX = true;
-		}else if(h > 0) {
+		}else if(moveInput.x > 0) {
 			playerSR.flipX = false;
-		}	
+		}
 
-		anim.SetFloat("Speed", Mathf.Abs(h*speed));
+		anim.SetFloat("Speed", Mathf.Abs(moveInput.x));
 
 		// Set y axis animation to run here
-		
-        GetComponent<Rigidbody2D>().velocity = new Vector2 (h*speed, v*speed);
+		GetComponent<Rigidbody2D>().velocity = moveInput * speed;
+        //GetComponent<Rigidbody2D>().velocity = new Vector2 (h*speed, v*speed);
     }
 
 	private void OnTriggerEnter2D(Collider2D collider){
