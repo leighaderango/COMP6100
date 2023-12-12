@@ -27,6 +27,7 @@ public class UI_Inventory : MonoBehaviour
 		this.inventory = inventory;
 		inventory.OnItemListChanged += Inventory_OnItemListChanged;
 		RefreshInventoryItems();
+		Debug.Log("set inventory run");
 	}
 	
 	public Inventory GetInventory(){

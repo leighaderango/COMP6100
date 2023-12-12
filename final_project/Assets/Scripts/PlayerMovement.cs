@@ -49,8 +49,9 @@ public class PlayerMovement : MonoBehaviour
 			itemWorld.DestroySelf();
 		}
 	}
-	
+
 	private void UseItem(Item item){
-		// controls what happens when item is used
+		//KEEP THIS HERE the inventory doesn't work without it
 	}
+
 }

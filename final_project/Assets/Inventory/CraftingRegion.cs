@@ -117,6 +117,7 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 		
 				
 		if (createdItem != null){
+
 			
 			inventory.AddItem(new Item {itemType = Item.GetItemType(createdItem), amount = 1});
 			
