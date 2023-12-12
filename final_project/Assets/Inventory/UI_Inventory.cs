@@ -10,12 +10,16 @@ public class UI_Inventory : MonoBehaviour
 		// connect inventory to UI
 		
 	private Transform itemSlotContainer;
-	private Transform itemSlotTemplate;
+	private Transform itemSlotTemplateTransform;
 		// used to show inventory items in the UI
+		
+		
+		
+	private string itemName;
 	
 	private void Awake(){
 		itemSlotContainer = transform.Find("ItemSlotContainer");
-		itemSlotTemplate = itemSlotContainer.Find("ItemSlotTemplate");
+		itemSlotTemplateTransform = itemSlotContainer.Find("ItemSlotTemplate");
 	}
 	
 	// connects this script and the UI object to the inventory
@@ -25,37 +29,47 @@ public class UI_Inventory : MonoBehaviour
 		RefreshInventoryItems();
 	}
 	
+	public Inventory GetInventory(){
+		return inventory;
+	}
+	
 	private void Inventory_OnItemListChanged(object sender, System.EventArgs e){
 		RefreshInventoryItems();
 	}
 
-	private void RefreshInventoryItems(){
+	public void RefreshInventoryItems(){
 		foreach (Transform child in itemSlotContainer){
-			if (child == itemSlotTemplate) continue;
+			if (child == itemSlotTemplateTransform) continue;
 			Destroy(child.gameObject);
 		}
 		
 		int x = 0;
 		int y = 0;
-		float itemSlotCellSize = 60f;
+		float itemSlotCellSize = 80f;
 		
 		// cycles through the items in the current inventory
 		foreach (Item item in inventory.GetItemList()){
-			RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
+			RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplateTransform, itemSlotContainer).GetComponent<RectTransform>();
 				//instantiates item slot template in the container
 			itemSlotRectTransform.gameObject.SetActive(true);
 				// makes it active (originally set as inactive so the template image doesn't show up)
 			itemSlotRectTransform.anchoredPosition = new Vector2(x*itemSlotCellSize, y * itemSlotCellSize);
 				//positions the templates in a grid
+
 			Image image = itemSlotRectTransform.Find("Image").GetComponent<Image>();
 			image.sprite = item.GetSprite();
 				// finds the sprite for the item type of the current item by calling to Item script
+				
+			
+			itemSlotRectTransform.gameObject.tag = item.itemType.ToString();
 			
 			TextMeshProUGUI uiText = itemSlotRectTransform.Find("AmountText").GetComponent<TextMeshProUGUI>();
 			if (item.amount > 1){
 				uiText.SetText(item.amount.ToString());
-			} else{
+			} else if (item.amount == 1){
 				uiText.SetText("");
+			} else{
+				uiText.SetText("0");
 			}
 			
 			x += 1;

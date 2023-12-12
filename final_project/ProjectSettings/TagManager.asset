@@ -6,6 +6,24 @@ TagManager:
   tags:
   - Dungeon
   - Room
+  - InventoryItem
+  - YellowBone
+  - GreenGem
+  - BlueGreenGem
+  - PurpleGem
+  - SilverGem
+  - GoldMetal
+  - SilverMetal
+  - Fabric
+  - test
+  - SilverPotion
+  - GreenPotion
+  - Sword_1
+  - Sword_2
+  - Sword_3
+  - Armorbody_1
+  - Armorbody_2
+  - Armorbody_3
   layers:
   - Default
   - TransparentFX

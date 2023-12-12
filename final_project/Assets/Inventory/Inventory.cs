@@ -16,13 +16,13 @@ public class Inventory{
 		itemList = new List<Item>();
 
 		// gives player a base inventory (DELETE LATER)
-		AddItem(new Item {itemType = Item.ItemType.YellowBone, amount = 1});
-		AddItem(new Item {itemType = Item.ItemType.GreenGem, amount = 1});
-		AddItem(new Item {itemType = Item.ItemType.BlueGreenGem, amount = 1});
-		AddItem(new Item {itemType = Item.ItemType.PurpleGem, amount = 1});
-		AddItem(new Item {itemType = Item.ItemType.SilverGem, amount = 1});
-		AddItem(new Item {itemType = Item.ItemType.GoldMetal, amount = 1});
-		AddItem(new Item {itemType = Item.ItemType.SilverMetal, amount = 1});
+		AddItem(new Item {itemType = Item.ItemType.YellowBone, amount = 3});
+		AddItem(new Item {itemType = Item.ItemType.GreenGem, amount = 2});
+		AddItem(new Item {itemType = Item.ItemType.BlueGreenGem, amount = 4});
+		AddItem(new Item {itemType = Item.ItemType.PurpleGem, amount = 2});
+		AddItem(new Item {itemType = Item.ItemType.SilverGem, amount = 6});
+		AddItem(new Item {itemType = Item.ItemType.GoldMetal, amount = 2});
+		AddItem(new Item {itemType = Item.ItemType.SilverMetal, amount = 2});
 		AddItem(new Item {itemType = Item.ItemType.Fabric, amount = 11});
 
 	}
@@ -55,9 +55,11 @@ public class Inventory{
 					inventoryItem.amount -= item.amount;
 					itemInInventory = inventoryItem;
 				}
+
 			}
-			if (itemInInventory != null && itemInInventory.amount <=0){
-				itemList.Remove(item);
+
+			if (itemInInventory.amount == 0){
+					itemList.Remove(itemInInventory);
 			}
 			
 		} else {

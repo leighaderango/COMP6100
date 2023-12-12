@@ -85,4 +85,40 @@ public class Item{
 		}
 	}
 	
+	static public ItemType GetItemType(string tagstring){
+		if (tagstring == "YellowBone"){
+			return ItemType.YellowBone;
+		} else if (tagstring == "GreenGem"){
+			return ItemType.GreenGem;
+		} else if (tagstring == "BlueGreenGem"){
+			return ItemType.BlueGreenGem;
+		} else if (tagstring == "PurpleGem"){
+			return ItemType.PurpleGem;
+		} else if (tagstring == "SilverGem"){
+			return ItemType.SilverGem;
+		} else if (tagstring == "GoldMetal"){
+			return ItemType.GoldMetal;
+		} else if (tagstring == "SilverMetal"){
+			return ItemType.SilverMetal;
+		} else if (tagstring == "Fabric"){
+			return ItemType.Fabric;
+		} else if (tagstring == "SilverPotion"){
+			return ItemType.SilverPotion;
+		} else if (tagstring == "GreenPotion"){
+			return ItemType.GreenPotion;
+		} else if (tagstring == "Sword_1"){
+			return ItemType.Sword_1;
+		} else if (tagstring == "Sword_2"){
+			return ItemType.Sword_2;
+		} else if (tagstring == "Sword_3"){
+			return ItemType.Sword_3;
+		} else if (tagstring ==  "Armor_Purple"){
+			return ItemType.Armorbody_3;
+		} else if (tagstring == "Armor_Green"){
+			return ItemType.Armorbody_2;
+		} else {
+			return ItemType.GreenPotion;
+		}
+	}
+	
 }

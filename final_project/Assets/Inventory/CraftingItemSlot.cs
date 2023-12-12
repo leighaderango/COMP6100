@@ -10,6 +10,11 @@ public class CraftingItemSlot : MonoBehaviour, IDropHandler {
 		if (eventData.pointerDrag != null){
 			eventData.pointerDrag.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
 		}
+		
+	
+		//Debug.Log("dropped " + eventData.pointerDrag.tag);
 	}
-
+	
+	
+	
 }
