@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
 	
 	
 	public Animator anim;
+	private BoxCollider2D enemy_collider;
 	public LayerMask PlayerLayer;
 	private Collider2D[] player; // player's collider (if in chase range)
 	private Collider2D[] hitPlayer;
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour
 		player = null;
 		hitPlayer = null;
         currentHealth = maxHealth;
+		enemy_collider = gameObject.GetComponent<BoxCollider2D>();
 		playerObject = GameObject.Find("Player");
     }
 	
@@ -98,7 +100,7 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy Died");
         //Die animation
         anim.SetTrigger("Dead");
-
+		enemy_collider.enabled = false;
 		// Make the enemy stop moving
 		chaseRange = 0f;
 

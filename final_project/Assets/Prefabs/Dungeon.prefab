@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3690764400699134804}
   m_Layer: 0
   m_Name: Dungeon
-  m_TagString: Dungeon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 909829859458481290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.7248917, y: 0.2961322, z: -0.025128793}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3690764400699134804
 MonoBehaviour:
@@ -44,5 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5924c20b2863c314791858fd0a88ce7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRooms: 1
-  roomDimensions: {x: 18, y: 14}
+  tp: {fileID: 8729950498282507651, guid: f45fa452b9cf42949ae17bd573d4221a, type: 3}
+  algorithm: {fileID: 4575518874062745797, guid: c52de6da566148a4a8d6dc508b2bc106, type: 3}
+  chunk: {fileID: 3440864625210008625, guid: d78c194ec922afc43bf02e8da52d8375, type: 3}
+  spawner: {fileID: 8815487941507238763, guid: e4bef8bfc0190084aae70394542f3e31, type: 3}
+  Player: {fileID: 1529289207859094126, guid: aa5aa6de19f925e4585740a32e58f9fc, type: 3}
+  WorldPositions: []

@@ -12,46 +12,38 @@ public class DungeonGeneration : MonoBehaviour
     public TilePainter tp;
     public Algorithms algorithm;
     public Chunk chunk;
+    public Spawner spawner;
     public Transform Player;
-
-    public int MazeComplexity;
-    public int numberOfRooms = 8;
-
-    // Dungeon Size
-    public static int gridSize = 50;
-    private static string[,] grid = new string[gridSize,gridSize];
 
     // Path Directions
     private List<string> path = new List<string>();
+    public List<Vector2Int> WorldPositions;
+    private Vector2Int spawnPosition = new Vector2Int();
 
-    // Wall Info. These are parallel lists.
-    private List<Vector2Int> WallPositions = new List<Vector2Int>();
-    private List<string> TileCodes = new List<string>();
+    // Track the chunk and all its positions.
+    // Spawn 2 rooms.
+    // When the player enters a new door. Spawn the List[room + 1] until we reach the end of the list.
 
-    // All Positions of tiles
-    private List<Vector2Int> positions = new List<Vector2Int>();
-
-    // Position of all blocks generated to create maze effect.
-    private HashSet<Vector2Int> blocks = new HashSet<Vector2Int>();
-
-    void Start() {
+    void Start() 
+    {
         Reset();
-        GenerateDungeon();
+        spawnPosition = new Vector2Int(0, 0);
+        path = algorithm.GeneratePathDirections();
+        SpawnChunks(path);
+        spawner.SpawnChests(WorldPositions);
+        spawner.SpawnEnemies(WorldPositions);
     }
 
     public void GenerateDungeon()
     {
         Reset();
+        spawnPosition = new Vector2Int(0,0);
         path = algorithm.GeneratePathDirections();
-
-        initializeDungeonGrid(path);
-
+        SpawnChunks(path);
+        spawner.SpawnChests(WorldPositions);
+        spawner.SpawnEnemies(WorldPositions);
         
-        //printDungeon();
-
         //SetEnemies();
-        //SetCollectibles();
-
         /*var unique = TileCodes.Distinct().ToList();
         foreach (var tileCode in unique)
         {
@@ -60,33 +52,64 @@ public class DungeonGeneration : MonoBehaviour
     }
 
 
-    public void initializeDungeonGrid(List<string> path)
+    public void SpawnChunks(List<string> path)
     {
-        // Do we want to handle spawning here? Yes
-        foreach(string dir in path) {
+        //Spawn chunks here.
 
-            chunk.createChunk(dir);
+        foreach(string dir in path) 
+        {
+            // Pass a world position. Must be IEnumerable so we can use AddRange.
+            IEnumerable<Vector2Int> currentChunkFloorPositions = chunk.createChunk(dir, spawnPosition);
+            
+            // Combine the last spawned chunk positions with the rest of the World Floor positions.
+            WorldPositions.AddRange(currentChunkFloorPositions);
+
+            // Set spawn position for next chunk
+            adjustSpawnPosition(dir);
         }
+
+        //printWorldPositions();
     }
 
-    // =====================================================
+    private void adjustSpawnPosition(string dir)
+    {
+        // Set the spawn position for the next chunk.
+        char lastChar = dir[dir.Length - 1];
+
+        int increment = 20;
+        switch (lastChar)
+        {
+            case 'N':
+                spawnPosition.y = spawnPosition.y + increment;
+                break;
+            case 'S':
+                spawnPosition.y = spawnPosition.y - increment;
+                break;
+            case 'E':
+                spawnPosition.x = spawnPosition.x + increment;
+                break;
+            case 'W':
+                spawnPosition.x = spawnPosition.x - increment;
+                break;
+        }
+
+        //Debug.Log(spawnPosition.x + ", " + spawnPosition.y);
+    }
+
+    private void printWorldPositions()
+    {
+        Debug.Log("========= WORLD POSITIONS =========");
+        foreach (Vector2Int position in WorldPositions)
+        {
+            Debug.Log(position.x + ", " + position.y);
+        }
+    }
 
     public void Reset()
     {
-        Array.Clear(grid, 0, grid.Length);
-        WallPositions.Clear();
-        TileCodes.Clear();
-        positions.Clear();
-        blocks.Clear();
         tp.Clear();
-    }
-    public void printDungeon() {
-        for(int x = 0; x < grid.GetLength(0); x++) {
-            string r = "";
-            for(int y = 0; y <  grid.GetLength(1); y++) {
-                r += grid[x, y];
-            }
-            Debug.Log(r);
-        }
+        spawner.Clear();
+        path.Clear();
+        WorldPositions.Clear();
     }
 }

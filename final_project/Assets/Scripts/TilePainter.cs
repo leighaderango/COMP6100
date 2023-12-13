@@ -11,9 +11,8 @@ public class TilePainter : MonoBehaviour
     public TileBase floor;
     public TileBase[] walls;
 
-    private int worldSpawnPositionX = 0;
-    private int worldSpawnPositionY = 0;
-    private static int chunksSpawned = 0;
+    /*private int worldSpawnPositionX = 0;
+    private int worldSpawnPositionY = 0;*/
 
     private Dictionary<string, int> codes = new Dictionary<string, int>()
     {
@@ -61,11 +60,26 @@ public class TilePainter : MonoBehaviour
 
     };
 
-    public void VisualizeChunk(string[,] chunk, int size, List<Vector2Int> WallPositions, List<string> TileCodes, string direction)
+    public void VisualizeChunk(List<Vector2Int> FloorPositions, List<Vector2Int> WallPositions, List<string> TileCodes, int size)
+    {
+        paintFloors(FloorPositions);
+        // printWallPositions(WallPositions);
+        paintWalls(WallPositions, TileCodes);
+    }
+
+    void paintFloors(List<Vector2Int> FloorPositions)
+    {
+        foreach (Vector2Int position in FloorPositions)
+        {
+            paintTile(floor, position.x, position.y);
+        }
+    }
+
+    /*public void VisualizeChunk(string[,] chunk, int size, List<Vector2Int> WallPositions, List<string> TileCodes, string direction)
     {
 
-        /*paintAllFloors(chunk, size);
-        paintAllWalls(chunk, size, WallPositions, TileCodes);*/
+        *//*paintAllFloors(chunk, size);
+        paintAllWalls(chunk, size, WallPositions, TileCodes);*//*
         // Iterate over the chunk and set each tile to the grid.
         for (int x = 0; x < size; x++)
         {
@@ -75,7 +89,7 @@ public class TilePainter : MonoBehaviour
                 {
                     case "0":
                         // Floor Tile. Set WorldPosition
-                        paintTile(floor, x + worldSpawnPositionX, y +worldSpawnPositionY);
+                        //paintTile(floor, x + worldSpawnPositionX, y +worldSpawnPositionY);
                         break;
                 }
                 
@@ -86,12 +100,10 @@ public class TilePainter : MonoBehaviour
 
         // We know that evey time we call this a chunk has been spawned and the world position must be changed.
         adjustWorldPosition(direction);
-    }
+    }*/
 
-    private void adjustWorldPosition(string dir)
+    /*private void adjustWorldPosition(string dir)
     {
-        chunksSpawned++;
-
         char lastChar = dir[dir.Length - 1];
 
         int increment = 20;
@@ -110,21 +122,30 @@ public class TilePainter : MonoBehaviour
                 worldSpawnPositionX = worldSpawnPositionX - increment;
                 break;
         }
-    }
+    }*/
 
-    public void paintAllWalls(string[,] grid, int size, List<Vector2Int> WallPositions, List<string> TileCodes)
+    public void printWallPositions(List<Vector2Int> wp)
     {
-        for(int i = 0; i < WallPositions.Count; i++)
+        foreach(Vector2Int wall in wp)
         {
-            paintWall(WallPositions[i], TileCodes[i]);
+            Debug.Log(wall.x + ", " + wall.y);
         }
     }
 
-    private void paintWall(Vector2Int wp, string tc)
+    public void paintWalls(List<Vector2Int> WallPositions, List<string> TileCodes)
+    {
+        // 30 
+        for(int i = 0; i < WallPositions.Count; i++)
+        {
+            paintSpecificWall(WallPositions[i], TileCodes[i]);
+        }
+    }
+
+    private void paintSpecificWall(Vector2Int wp, string tc)
     {
         // turn String into TileBase
-        int x = wp.x + worldSpawnPositionX;
-        int y = wp.y + worldSpawnPositionY;
+        int x = wp.x;
+        int y = wp.y;
         paintTile(walls[codes[tc]], x, y);
     }
 
@@ -134,34 +155,14 @@ public class TilePainter : MonoBehaviour
         Vector3Int position = new Vector3Int(x, y, 0);
         var tilePosition = terrain.WorldToCell(position);
 
-        Debug.Log("Tile Position = (" + tilePosition.x + ", " + tilePosition.y + ")");
+        //Debug.Log("Tile Position = (" + tilePosition.x + ", " + tilePosition.y + ")");
 
         terrain.SetTile(tilePosition, tile);
     }
 
-    private void paintAllFloors(string[,] grid, int size)
-    {
-        // Iterate over grid and set each tile to the grid.
-        for (int x = 0; x < size; x++)
-        {
-            for (int y = 0; y < size; y++)
-            {
-                switch (grid[x, y])
-                {
-                    case "0":
-                        // Floor Tile. Set WorldPosition
-                        paintTile(floor, x, y);
-                        break;
-                }
-
-            }
-
-        }
-    }
-
     public void Clear()
     {
-        worldSpawnPositionX = 0; worldSpawnPositionY = 0;
+        //worldSpawnPositionX = 0; worldSpawnPositionY = 0;
         terrain.ClearAllTiles();
     }
 }

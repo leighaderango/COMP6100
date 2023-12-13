@@ -2,113 +2,112 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Chunk : MonoBehaviour
 {
+    // Local position for the tiles in the chunk.
     public static int size = 20;
     private static string[,] grid = new string[size, size];
-    public TilePainter tp;
+
+
+    public TilePainter tilePainter;
+    public int numberOfChests = 1;
 
     // Wall Info. These are parallel lists.
     private List<Vector2Int> WallPositions = new List<Vector2Int>();
     private List<string> TileCodes = new List<string>();
     private List<string> DoorDirections = new List<string>();
+    List<Vector2Int> DoorPositions = new List<Vector2Int>();
 
-    // All Positions of tiles
+    // World Positions of grid.
     private List<Vector2Int> positions = new List<Vector2Int>();
 
-    public void createChunk(string direction)
+    // World Floor position of tiles.
+    private List<Vector2Int> FloorPositions = new List<Vector2Int>();
+
+    public IEnumerable<Vector2Int> createChunk(string direction, Vector2Int spawnPosition)
     {
         Reset();
-        initializeChunkGrid();
-        setDoors(direction);
+        initializeChunkGrid(spawnPosition, direction);
         createDungeonWalls();
+        tilePainter.VisualizeChunk(FloorPositions, WallPositions, TileCodes, size);
+        //printPositions();
 
-        tp.VisualizeChunk(grid, size, WallPositions, TileCodes, direction);
+        return FloorPositions;
     }
 
-    public void initializeChunkGrid()
+    public void initializeChunkGrid(Vector2Int startPosition, string dir)
     {
+        int top = (int)(size / 2) - 1;
+        int middle = (int)(size / 2);
+        int bottom = (int)(size / 2) + 1;
+        int length = size - 1;
         // Sets the floors and walls of the grid.
         for (int x = 0; x < size; x++)
         {
             for (int y = 0; y < size; y++)
             {
-                //Record the position
-                Vector2Int currentPosition = new Vector2Int(x, y);
-                positions.Add(currentPosition);
-                //Debug.Log(currentPosition);
+                // Record world position of the tile.
+                Vector2Int currentilePosition = new Vector2Int(startPosition.x + x, startPosition.y + y);
+                positions.Add(currentilePosition);
+                //Debug.Log(currentilePosition);
 
                 // Outermost cells will be set to wall.
                 if (x == 0 || y == 0 || x == size - 1 || y == size - 1)
                 {
                     grid[x, y] = "1"; // Set to wall
+                    WallPositions.Add(currentilePosition);
                 }
                 else
                 {
                     grid[x, y] = "0"; // Set to floor
+                    FloorPositions.Add(currentilePosition);
+                }
+
+                // To spawn a door. Override the wall positions and replace with floor positions.
+                // Overwrite any walls and set equal to floor.
+                if ( dir.Contains('N') && (grid[top, length] == "1" || grid[middle, length] == "1" || grid[bottom, length] == "1"))
+                {
+                    grid[x, y] = "0";
+                    FloorPositions.Add(currentilePosition);
+                    WallPositions.Remove(currentilePosition);
+                }
+
+                if (dir.Contains('S') && (grid[top, 0] == "1" || grid[middle, 0] == "1" || grid[bottom, 0] == "1"))
+                {
+                    grid[x, y] = "0";
+                    FloorPositions.Add(currentilePosition);
+                    WallPositions.Remove(currentilePosition);
+                }
+
+                if(dir.Contains('W') && (grid[0, top] == "1" || grid[0, middle] == "1" || grid[0, bottom] == "1"))
+                {
+                    grid[x, y] = "0";
+                    FloorPositions.Add(currentilePosition);
+                    WallPositions.Remove(currentilePosition);
+                }
+                
+                if(dir.Contains('E') && (grid[length, top] == "1" || grid[length, middle] == "1" || grid[length, bottom] == "1"))
+                {
+                    grid[x, y] = "0";
+                    FloorPositions.Add(currentilePosition);
+                    WallPositions.Remove(currentilePosition);
                 }
 
             }
         }
-
-    }
-
-    private void setDoors(string directions)
-    {
-        DoorDirections = directions.Select(c => c.ToString()).ToList();
-
-        foreach (string direction in DoorDirections)
-        {
-            switch(direction)
-            {
-                case "N":
-                    // Set position to floor to create a door.
-                    //Vector2Int left = new Vector2Int(0, size / 2);
-                    //Vector2Int right = new Vector2Int(0, size / 2);
-                    
-                    grid[(int)(size / 2) - 1, size-1] = "0";
-                    grid[(int)(size / 2), size-1] = "0";
-                    //WallPositions.Remove(pos);
-                    // Set wallCornerLeft and wallCornerRight to 1
-                    break;
-                case "S":
-                    // Set position to floor to create an open door.
-                    grid[(int)(size / 2) - 1, 0] = "0";
-                    grid[(int)(size / 2), 0] = "0";
-                    // Set wallCornerLeft and wallCornerRight to 1
-                    break;
-                case "W":
-                    // Set position to floor to create an open door.
-                    grid[0, (int)(size / 2)] = "0";
-                    grid[0, (int)(size / 2)+1] = "0";
-                    // Set wallCornerLeft and wallCornerRight to 1
-                    break;
-                case "E":
-                    // Set position to floor to create an open door.
-                    grid[size - 1, (int)(size / 2)] = "0";
-                    grid[size - 1, (int)(size / 2) + 1] = "0";
-                    // Set wallCornerLeft and wallCornerRight to 1
-                    break;
-            }
-
-        }
-        
     }
 
     private void createDungeonWalls()
     {
-        foreach (var p in positions)
+        // Using 2 separate coords. Need to use grid.
+        foreach (Vector2Int p in WallPositions)
         {
             // Check if current positon is a wall.
-            if (grid[p.x, p.y] == "1")
-            {
-                // Add wall position to list.
-                WallPositions.Add(p);
-                CheckAdjacentCells(p);
-            }
+            CheckAdjacentCells(p);
         }
     }
 
@@ -125,16 +124,13 @@ public class Chunk : MonoBehaviour
 
         for (int d = 0; d < 8; d++)
         {
+            // Positions to check each adjacent cell
             int row = cp.x + dx[d];
             int col = cp.y + dy[d];
-
-            if (row >= 0 && row < size && col >= 0 && col < size)
+            Vector2Int currentPos = new Vector2Int(row, col);
+            if (FloorPositions.Contains(currentPos))
             {
-                // Look for adjacent floors. Record their position.
-                if (grid[row, col] == "0")
-                {
-                    tileCode += d;
-                }
+                tileCode += d;
             }
         }
 
@@ -143,12 +139,24 @@ public class Chunk : MonoBehaviour
         tileCode = "";
     }
 
+    void printPositions()
+    {
+        Debug.Log("========= CHUNK FLOOR POSITIONS =========");
+        foreach (Vector2Int pos in FloorPositions)
+        {
+            Debug.Log(pos.x + ", " + pos.y);
+        }
+    }
+
     public void Reset()
     {
         Array.Clear(grid, 0, grid.Length);
         WallPositions.Clear();
+        FloorPositions.Clear();
         TileCodes.Clear();
         positions.Clear();
-        // tp.Clear();
+        DoorDirections.Clear();
+        
+        // tilePainter.Clear();
     }
 }
