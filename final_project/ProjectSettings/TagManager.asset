@@ -24,6 +24,9 @@ TagManager:
   - Armorbody_1
   - Armorbody_2
   - Armorbody_3
+  - BlueChest
+  - GoldChest
+  - RedChest
   layers:
   - Default
   - TransparentFX

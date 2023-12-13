@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    // Start is called before the first frame update
     public bool isOpen;
     public int numOfItemsToSpawn;
     public Animator anim;
@@ -12,8 +11,7 @@ public class Chest : MonoBehaviour
     List<Item> items;
 
     List<string> chestContains = new List<string>();
-    List<string> item_name = new List<string>()
-    {
+    List<string> item_name = new List<string>(){
         "YellowBone",
         "GreenGem",
         "BlueGreenGem",
@@ -21,15 +19,7 @@ public class Chest : MonoBehaviour
         "SilverGem",
         "GoldMetal",
         "SilverMetal",
-        "Fabric",
-        "Sword_1",
-        "Sword_2",
-        "Sword_3",
-        "Armor_green",
-        "Armor_purple",
-        "SilverPotion",
-        "GreenPotion",
-    };
+        "Fabric"};
 
     // Update is called once per frame.
     void Start()

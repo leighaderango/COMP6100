@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
 	
 	private float speed = 0.8f;
 	public float chaseRange = 7f; // the range from enemey when it will chase the player
-	public float attackRange = 0.5f;
+	public float attackRange = 1f;
 	
 	
 	public Animator anim;
@@ -76,8 +76,9 @@ public class Enemy : MonoBehaviour
 		
 		//Damage player
 		if (hitPlayer.Length != 0){
-			foreach(Collider2D player in hitPlayer){ 
-				player.GetComponent<PlayerCombat>().TakeDamage(damage);
+			foreach(Collider2D hitplayer in hitPlayer){ 
+				hitplayer.GetComponent<PlayerCombat>().TakeDamage(damage);
+				
 			}
 		}
 		
@@ -87,7 +88,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage) {
         currentHealth -= damage;
 		
-        // Debug.Log("Enemy Health => " + currentHealth);
+        Debug.Log("Enemy Health => " + currentHealth);
 
         if(currentHealth <= 0) {
             Die();
@@ -100,9 +101,11 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy Died");
         //Die animation
         anim.SetTrigger("Dead");
+		
+		chaseRange = 0f;
 		enemy_collider.enabled = false;
 		// Make the enemy stop moving
-		chaseRange = 0f;
+		
 
     }
 	
@@ -110,7 +113,7 @@ public class Enemy : MonoBehaviour
     {
         // Display the chase range
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, chaseRange);
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
 }

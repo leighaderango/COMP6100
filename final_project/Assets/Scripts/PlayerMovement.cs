@@ -9,25 +9,37 @@ public class PlayerMovement : MonoBehaviour
 	private float sprintSpeed = 5.5f;
 	private float drainRate = 1f;
 	private float rechargeRate = 1f;
+	private bool inventoryOpen = false;
 
 	private Vector2 moveInput;
 	private SpriteRenderer playerSR;
 	private Animator anim;
-	
+	private Canvas inventoryCanvas;
 	// connects player, inventory, and inventory UI
-	private Inventory inventory;
+	public Inventory inventory;
 	[SerializeField] private UI_Inventory uiInventory;
+	
 
     void Start()
     {
 		playerSR = GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
+		inventoryCanvas = GameObject.Find("InventoryCanvas").GetComponent<Canvas>();
 		
         inventory = new Inventory(UseItem);
 		uiInventory.SetInventory(inventory);
 			// initializes inventory and connects it to the UI
 		
+		
     }
+	
+	void Update(){
+		if (Input.GetKeyDown(KeyCode.P)){ // Open
+			inventoryCanvas.enabled = !inventoryOpen;
+			inventoryOpen = !inventoryOpen;
+		}
+		
+	}
 
     void FixedUpdate()
     {
@@ -78,5 +90,7 @@ public class PlayerMovement : MonoBehaviour
 	private void UseItem(Item item){
 		//KEEP THIS HERE the inventory doesn't work without it
 	}
+	
+	
 
 }

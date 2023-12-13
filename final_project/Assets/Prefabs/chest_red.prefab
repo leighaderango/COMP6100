@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3319909483709969633}
   m_Layer: 0
   m_Name: chest_red
-  m_TagString: Untagged
+  m_TagString: RedChest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
