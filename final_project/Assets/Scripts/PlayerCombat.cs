@@ -6,7 +6,7 @@ public class PlayerCombat : MonoBehaviour
 {
     public float attackRange = 0.5f;
     public int attackDamage = 30;
-    private int maxHealth = 100;
+    private int maxHealth = 1000;
     private int currentHealth;
     private float cooldown = 1f; //seconds
     private float lastAttackedAt = -9999f;
