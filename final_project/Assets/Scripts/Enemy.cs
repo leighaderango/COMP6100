@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
 	private float lastAttackedAt = -9999f;
 	
 	private float speed = 0.8f;
-	public float chaseRange = 0f; // the range from enemey when it will chase the player
+	public float chaseRange = 7f; // the range from enemey when it will chase the player
 	public float attackRange = 0.5f;
 	
 	
@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
 		hitPlayer = null;
         currentHealth = maxHealth;
 		enemy_collider = gameObject.GetComponent<BoxCollider2D>();
-		playerObject = GameObject.Find("Player");
+		playerObject = GameObject.FindWithTag("Player");
     }
 	
 	void Update(){
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage) {
         currentHealth -= damage;
 		
-        Debug.Log("Enemy Health => " + currentHealth);
+        // Debug.Log("Enemy Health => " + currentHealth);
 
         if(currentHealth <= 0) {
             Die();
@@ -106,7 +106,7 @@ public class Enemy : MonoBehaviour
 
     }
 	
-	    void OnDrawGizmosSelected()
+	void OnDrawGizmosSelected()
     {
         // Display the chase range
         Gizmos.color = Color.white;

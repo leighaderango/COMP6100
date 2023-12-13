@@ -10,6 +10,27 @@ public class Chest : MonoBehaviour
     public Animator anim;
 
     List<Item> items;
+
+    List<string> chestContains = new List<string>();
+    List<string> item_name = new List<string>()
+    {
+        "YellowBone",
+        "GreenGem",
+        "BlueGreenGem",
+        "PurpleGem",
+        "SilverGem",
+        "GoldMetal",
+        "SilverMetal",
+        "Fabric",
+        "Sword_1",
+        "Sword_2",
+        "Sword_3",
+        "Armor_green",
+        "Armor_purple",
+        "SilverPotion",
+        "GreenPotion",
+    };
+
     // Update is called once per frame.
     void Start()
     {
@@ -23,11 +44,11 @@ public class Chest : MonoBehaviour
     void Update()
     {
         if(isOpen == true){
-            Debug.Log("Chest opened");
+            //Debug.Log("Chest opened");
             // Open chest animation.
             anim.SetBool("isOpen", true);
             // Show UI with Items added to inventory.
-
+            // Inventory.AddItem(item)
             // Turn off script so Player cannot interact with it.
             gameObject.GetComponent<Chest>().enabled = false;
         }
@@ -35,10 +56,15 @@ public class Chest : MonoBehaviour
 
     private void fillChest()
     {
+        int rnd = Random.Range(0, item_name.Count);
         for(int i = 0; i < numOfItemsToSpawn; i++) {
-            
+            chestContains.Add(item_name[rnd]);
         }
-        
+    }
+
+    private void dumpItemsInventory()
+    {
+
     }
 
     // private void addForceToItems() 

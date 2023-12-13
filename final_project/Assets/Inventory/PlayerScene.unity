@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemType: 5
+    itemType: 0
     amount: 1
 --- !u!1 &267377483
 GameObject:

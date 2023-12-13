@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class interactionChest : MonoBehaviour
 {
-
+    
     public int ChestsInRange = 0;
+    public Canvas InventoryCanvas;
     [SerializeField] private List<GameObject> chestsInArea;
+    bool canvasIsOpen = false;
 
     void Update() {
 
         if(Input.GetButtonDown("Interact")) 
         {
-            Debug.Log("Button Pressed");
+            //Debug.Log("Button Pressed");
             // Pass items to inventory here.
             // Basically just pass the (List<string> chest) to your function and add to inventory.
             foreach(GameObject c in chestsInArea)
@@ -21,6 +23,25 @@ public class interactionChest : MonoBehaviour
             }
 
             ChestsInRange = 0;
+        }
+
+        if(Input.GetButtonDown("Inventory") && canvasIsOpen)
+        {
+            InventoryCanvas.GetComponent<Canvas>().enabled = false;
+
+            canvasIsOpen = false;
+
+            Debug.Log("Canvas OPEN");
+        }
+
+
+        if (Input.GetButtonDown("Inventory") && !canvasIsOpen)
+        {
+            InventoryCanvas.GetComponent<Canvas>().enabled = true;
+
+            canvasIsOpen = true;
+            Debug.Log("Canvas CLOSED");
+
         }
     }
 

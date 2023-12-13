@@ -9,7 +9,6 @@ public class ItemWorld : MonoBehaviour{
 	private SpriteRenderer spriteRenderer;
 	private TextMeshPro textMeshPro;
 	
-	
 	public static ItemWorld SpawnItemWorld(Vector3 position, Item item){
 		Transform transform = Instantiate(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
 		ItemWorld itemWorld = transform.GetComponent<ItemWorld>();

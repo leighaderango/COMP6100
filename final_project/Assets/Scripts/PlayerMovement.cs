@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 		
 		if(Input.GetKey(KeyCode.Space))
         {
-			Debug.Log("Sprinting");
+			//Debug.Log("Sprinting");
 			if(stamina > 0)
 			{
 				speed = sprintSpeed;
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
             }
 			
 		}
-		Debug.Log(stamina);
+		//Debug.Log(stamina);
 
 		anim.SetFloat("Speed", Mathf.Abs(moveInput.magnitude));
 
