@@ -159,4 +159,11 @@ public class Chunk : MonoBehaviour
         
         // tilePainter.Clear();
     }
+
+    public List<Vector2Int> lastLevelInfo()
+    {
+
+
+        return new List<Vector2Int>();  
+    }
 }

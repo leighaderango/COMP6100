@@ -49,6 +49,15 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public void starterChest()
+    {
+        Vector2Int startPos = new Vector2Int(10, 10);
+        GameObject obj = Instantiate(chests[1], (Vector3Int)startPos, Quaternion.identity);
+        obj.name = "chest_gold";
+        spawnedChests.Add(obj);
+        Debug.Log("Starter chest spawned");
+    }
+
     public void SpawnChests(List<Vector2Int> availableSpawnPositions)
     {
         for (int i = 0; i < numOfChests; i++)

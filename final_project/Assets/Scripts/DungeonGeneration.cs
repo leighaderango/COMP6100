@@ -19,6 +19,8 @@ public class DungeonGeneration : MonoBehaviour
     private List<string> path = new List<string>();
     public List<Vector2Int> WorldPositions;
     private Vector2Int spawnPosition = new Vector2Int();
+    private List<Vector2Int> firstRoom = new List<Vector2Int>();
+    private List<Vector2Int> secondRoom = new List<Vector2Int>();
 
     // Track the chunk and all its positions.
     // Spawn 2 rooms.
@@ -40,29 +42,37 @@ public class DungeonGeneration : MonoBehaviour
         spawnPosition = new Vector2Int(0,0);
         path = algorithm.GeneratePathDirections();
         SpawnChunks(path);
+        spawner.starterChest();
         spawner.SpawnChests(WorldPositions);
         spawner.SpawnEnemies(WorldPositions);
-        
-        //SetEnemies();
-        /*var unique = TileCodes.Distinct().ToList();
-        foreach (var tileCode in unique)
-        {
-            //Debug.Log(tileCode);
-        }*/
+
     }
 
 
     public void SpawnChunks(List<string> path)
     {
         //Spawn chunks here.
-
-        foreach(string dir in path) 
+        int idx = 0;
+        foreach (string dir in path)
         {
             // Pass a world position. Must be IEnumerable so we can use AddRange.
             IEnumerable<Vector2Int> currentChunkFloorPositions = chunk.createChunk(dir, spawnPosition);
-            
             // Combine the last spawned chunk positions with the rest of the World Floor positions.
-            WorldPositions.AddRange(currentChunkFloorPositions);
+            if (idx >= 2)
+            {
+                WorldPositions.AddRange(currentChunkFloorPositions);
+            }
+            else
+            {
+                if(idx == 1)
+                {
+                    
+                    secondRoom.AddRange(currentChunkFloorPositions);
+                    printWorldPositions();
+                }
+
+                idx++;
+            }
 
             // Set spawn position for next chunk
             adjustSpawnPosition(dir);
@@ -99,11 +109,13 @@ public class DungeonGeneration : MonoBehaviour
     private void printWorldPositions()
     {
         Debug.Log("========= WORLD POSITIONS =========");
-        foreach (Vector2Int position in WorldPositions)
+        foreach (Vector2Int position in secondRoom)
         {
             Debug.Log(position.x + ", " + position.y);
         }
     }
+
+    
 
     public void Reset()
     {
