@@ -29,25 +29,28 @@ public class Inventory{
 	
 	// adds item to existing inventory
 	public void AddItem(Item item){
-		if (item.IsStackable()){
+		if (item.IsStackable()){ 
 			bool itemAlreadyInInventory = false;
 			foreach (Item inventoryItem in itemList){
-				if (inventoryItem.itemType == item.itemType){
-					inventoryItem.amount += item.amount;
-					itemAlreadyInInventory = true;
+				if (inventoryItem.itemType == item.itemType){ // match item to be added to an inventory item
+					inventoryItem.amount += item.amount; // increase amount
+					itemAlreadyInInventory = true; 
 				}
 			}
 			if (!itemAlreadyInInventory){
-				itemList.Add(item);
+				// if item did not match to an inventory item (not posessed yet)
+				itemList.Add(item); 
+					// add the item to the list of items in inventory
 			}
 			
 		} else {
-			itemList.Add(item);
+			itemList.Add(item); // if item can't be stacked, just add another element to itemList
 		}
-		OnItemListChanged?.Invoke(this, EventArgs.Empty);
+		OnItemListChanged?.Invoke(this, EventArgs.Empty); // if item list has been changed, reset inventory
 	}
 	
-	public void RemoveItem(Item item){
+	// same logic as adding item to inventory, but reversed
+	public void RemoveItem(Item item){ 
 		if (item.IsStackable()){
 			Item itemInInventory = null;
 			foreach (Item inventoryItem in itemList){
@@ -58,8 +61,8 @@ public class Inventory{
 
 			}
 
-			if (itemInInventory.amount == 0){
-					itemList.Remove(itemInInventory);
+			if (itemInInventory.amount == 0){ // if there are no items of this kind left, 
+					itemList.Remove(itemInInventory); // remove the item from the inventory completely
 			}
 			
 		} else {
@@ -68,10 +71,12 @@ public class Inventory{
 		OnItemListChanged?.Invoke(this, EventArgs.Empty);
 	}
 	
+	// not utilized, but could be used if items had ability to be used in the game world
 	public void UseItem(Item item){
 		useItemAction(item);
 	}
 	
+	// public function to access items in the inventory
 	public List<Item> GetItemList(){
 		return itemList;
 	}

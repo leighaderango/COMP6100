@@ -16,7 +16,7 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 	private Vector2 crafterTag;
 	private Animator anim;
 	
-
+	// nested dictionary of crafting recipes
 	private Dictionary<string, Dictionary<string, int>> recipes = new Dictionary<string, Dictionary<string, int>>{
 		
 		{"Sword_2", new Dictionary<string, int> {{"SilverMetal", 2}, 
@@ -36,30 +36,36 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 
 		
 	private void Start(){
+		
 		inventory = ui_inventory.GetInventory();
+			// connect to player inventory
 		anim = gameObject.GetComponent<Animator>();
+			// access animator for cauldron fire
 	}
 
 
 	public void OnDrop(PointerEventData eventData){
+		// when item is dropped in crafting region
 		
 		if (!craftDict.ContainsKey(eventData.pointerDrag.tag)){
+			// if it has not already been added to the dictionary of items in the region
 		
 			if (eventData.pointerDrag.transform.GetChild(1).GetComponent<TMP_Text>().text != ""){
 				craftDict.Add(eventData.pointerDrag.tag.ToString(), int.Parse(eventData.pointerDrag.transform.GetChild(1).GetComponent<TMP_Text>().text));
 			} else{
 				craftDict.Add(eventData.pointerDrag.tag.ToString(), 1);
 			}
+			// add it as a key, with the amount as the value
 		}
 		
 	}
 	
-	public void Craft(){
+	public void Craft(){ // executes when craft button is pushed
 		
-		bool isRecipe = true;
-		string createdItem = null;
-		List<string> keysToRemove = new List<string>(); 
-		anim.SetBool("FlameActive", true);
+		bool isRecipe = true; // if items in crafting region make up a recipe
+		string createdItem = null; // item being created
+		List<string> keysToRemove = new List<string>(); // list of items removed from crafting region
+		anim.SetBool("FlameActive", true); // animation
 		
 		
 		// check if each item in craftDict is still in the crafting region
@@ -69,14 +75,14 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 				objectCollider = gameObject.GetComponent<BoxCollider2D>();
 
 				if (!objectCollider.OverlapPoint(crafterTag)){
-					keysToRemove.Add(crafter.Key);
+					keysToRemove.Add(crafter.Key); // if not, add it to list of items to be removed
 				}
 			}
 		}
 		
-		if (keysToRemove.Count != 0){
+		if (keysToRemove.Count != 0){ // if any items have been removed from the crafting region,
 			foreach (string key in keysToRemove){
-				craftDict.Remove(key);
+				craftDict.Remove(key); // remove them from consideration for recipes
 			}
 		}
 		
@@ -106,8 +112,8 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 				}
 				
 			}
-			if (isRecipe == true){
-				createdItem = item.Key;
+			if (isRecipe == true){ // if the items in the crafting region match a recipe
+				createdItem = item.Key; // set the item to be created and stop checking recipes
 				break;
 			}
 			
@@ -116,11 +122,13 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 			
 		
 				
-		if (createdItem != null){
+		if (createdItem != null){ // if the items in the crafing region form a recipe
 
 			
-			inventory.AddItem(new Item {itemType = Item.GetItemType(createdItem), amount = 1});
+			inventory.AddItem(new Item {itemType = Item.GetItemType(createdItem), amount = 1}); 
+				// add the created item to the inventory
 			
+				// and remove all of its ingredients from the inventory amounts
 			foreach (KeyValuePair <string, int> ingredient in recipes[createdItem.ToString()]){
 				string usedItem = ingredient.Key;
 				int usedAmount = ingredient.Value;
@@ -131,6 +139,7 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 			
 		} 
 		
+		// reset objects used for monitoring
 		createdItem = null;
 		craftDict.Clear();
 		keysToRemove.Clear();

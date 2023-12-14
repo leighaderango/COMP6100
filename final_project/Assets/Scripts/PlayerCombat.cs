@@ -17,100 +17,94 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemyLayers;
     string attackType;
 	public Slider healthBar;
+	public Canvas endGameCanvas;
+	private GameObject leftAnimation;
+	private GameObject rightAnimation;
 
-    void Start()
-    {
+
+    void Start(){
 		healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
         currentHealth = maxHealth;
 		healthBar.maxValue = maxHealth;
         healthBar.value = maxHealth;
 		
-	
+		rightAnimation = GameObject.Find("RightAnimation");
+		leftAnimation = GameObject.Find("LeftAnimation");
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetButtonDown("Attack1"))
-        {
-            if (Time.time > lastAttackedAt + cooldown)
-            {
+    void Update(){
+        if (Input.GetButtonDown("Attack1")){
+            if (Time.time > lastAttackedAt + cooldown){
                 attackType = "1";
                 Attack(attackType);
                 lastAttackedAt = Time.time;
             }
         }
 
-        if (Input.GetButtonDown("Attack2"))
-        {
-            if (Time.time > lastAttackedAt + cooldown)
-            {
+        if (Input.GetButtonDown("Attack2")){
+            if (Time.time > lastAttackedAt + cooldown){
                 attackType = "2";
                 Attack(attackType);
                 lastAttackedAt = Time.time;
             }
         }
 
-        if (Input.GetButtonDown("Attack3"))
-        {
-            if (Time.time > lastAttackedAt + cooldown)
-            {
+        if (Input.GetButtonDown("Attack3")){
+            if (Time.time > lastAttackedAt + cooldown){
                 attackType = "3";
                 Attack(attackType);
                 lastAttackedAt = Time.time;
             }
         }
 
-        if (Input.GetButtonDown("Block"))
-        {
+        if (Input.GetButtonDown("Block")){
             attackType = "_block";
             Attack(attackType);
         }
     }
 
-    void Attack(string type)
-    {
+    void Attack(string type){
 
         // Play attack animation
         string setAttack = "Attack" + type;
         anim.SetTrigger(setAttack);
 
-        //Detect enemies in range of attack
+        // Detect enemies in range of attack
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
-        //Damage the enemies
-        foreach (Collider2D enemy in hitEnemies)
-        {
+        // Damage the enemies
+        foreach (Collider2D enemy in hitEnemies){
             enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
         }
     }
 
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-
+	// executes when attacked by enemy
+    public void TakeDamage(int damage){
+        
+		currentHealth -= damage;
         anim.SetTrigger("Damaged");
-        Debug.Log("Player Health => " + currentHealth);
 
-        if (currentHealth <= 0)
-        {
+        if (currentHealth <= 0){
             Die();
         }
 		
-		healthBar.value = currentHealth;
+		healthBar.value = currentHealth; // update health bar value
     }
 
-    void Die()
-    {
+    void Die(){
+		
+		// play death animation
         anim.SetTrigger("Death");
-        // add losing game ending stuff here
-
-    }
-	
-	private void SetHealth(int hp)
-    {
-        healthBar.value = hp;
+		
+		// show and animate end game canvas
+		endGameCanvas.GetComponent<Canvas>().enabled = true;
+		leftAnimation.GetComponent<Animator>().SetBool("FlameActive", true);
+		rightAnimation.GetComponent<Animator>().SetBool("FlameActive", true);
+		
+		// stop game underneath
+		Time.timeScale = 0;
+       
     }
 
     void OnDrawGizmosSelected()

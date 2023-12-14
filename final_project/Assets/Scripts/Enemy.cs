@@ -9,34 +9,32 @@ public class Enemy : MonoBehaviour
     public int maxHealth = 100;
 	private int currentHealth;
 	private int damage = 10;
-	private float cooldown = 1f; //seconds
+	private float cooldown = 3f; // attack rebound time in seconds
 	private float lastAttackedAt = -9999f;
 	
 	private float speed = 0.8f;
-	public float chaseRange = 7f; // the range from enemey when it will chase the player
-	public float attackRange = 1f;
+	public float chaseRange = 7f; // the range from enemy when it will chase the player
+	public float attackRange = 1f; // the range from enemy when it will attack the player
 	
 	
-	public Animator anim;
-	private BoxCollider2D enemy_collider;
-	public LayerMask PlayerLayer;
+	public Animator anim; // animator of the enemy character
+	private BoxCollider2D enemy_collider; // collider element of the enemy character
+	public LayerMask PlayerLayer; // limits what items will be considered in range (only player, not other objects)
 	private Collider2D[] player; // player's collider (if in chase range)
-	private Collider2D[] hitPlayer;
-	private Collider2D[] attackPlayer;
-	private GameObject playerObject; // player
+	private Collider2D[] attackPlayer; // player's collider (if in attack range)
+	private GameObject playerObject; 
 	
 
     void Start()
     {
 		player = null;
-		hitPlayer = null;
         currentHealth = maxHealth;
 		enemy_collider = gameObject.GetComponent<BoxCollider2D>();
 		playerObject = GameObject.FindWithTag("Player");
     }
 	
 	void Update(){
-		player = null; // reset player array
+		player = null; // reset player array to constantly monitor movement
 		float step = speed * Time.deltaTime;
 		
 		// find if the player is within chase range using current position of the enemy
@@ -45,36 +43,39 @@ public class Enemy : MonoBehaviour
 		if (player.Length != 0 & (currentHealth > 0.25*maxHealth)){ // if player is within chase range
 			transform.position = Vector2.MoveTowards(transform.position, playerObject.transform.position, step);
 			anim.SetFloat("Speed", speed);
-			// move towards player
+			// enemy move towards player
 		} else if (player.Length != 0 & (currentHealth <= 0.25*maxHealth)){
 			transform.position = Vector2.MoveTowards(transform.position, playerObject.transform.position, -step);
 			anim.SetFloat("Speed", speed);
 			// if health is low, move away
 		} else {
 			anim.SetFloat("Speed", 0f);
+			// if not in range, stay in place
 		}
 		
+		// detect if player is in range of attack
 		attackPlayer = Physics2D.OverlapCircleAll(transform.position, attackRange, PlayerLayer);
 		
 		if (attackPlayer.Length != 0){
-			if (Time.time > lastAttackedAt + cooldown){
-				Attack();
+			if (Time.time > lastAttackedAt + cooldown){ 
+				Attack(attackPlayer);
 				lastAttackedAt = Time.time;
+				// if player is in range and this enemy has not attacked in last 3 seconds
+				// attack player
 			}
-		}
+		} 
 		
 		
 	}
 	
-	public void Attack(){
+	
+	// attack player
+	public void Attack(Collider2D[] hitPlayer){
 
-        // Play attack animation 
+        // Play enemy's attack animation 
         anim.SetTrigger("Attack");
 
-        //Detect if player is in range of attack
-        hitPlayer = Physics2D.OverlapCircleAll(transform.position, attackRange, PlayerLayer);
-		
-		//Damage player
+		// Damage player
 		if (hitPlayer.Length != 0){
 			foreach(Collider2D hitplayer in hitPlayer){ 
 				hitplayer.GetComponent<PlayerCombat>().TakeDamage(damage);
@@ -84,27 +85,27 @@ public class Enemy : MonoBehaviour
 		
     }
 	
-
+	// executes when attacked
     public void TakeDamage(int damage) {
-        currentHealth -= damage;
 		
-        Debug.Log("Enemy Health => " + currentHealth);
+        currentHealth -= damage;
 
         if(currentHealth <= 0) {
             Die();
         } else{
-			 anim.SetTrigger("Damaged");
+			 anim.SetTrigger("Damaged");  // if attacked but not dead, play animation
 		}
     }
 
+	// executes when enemy health reaches 0
     void Die() {
-        Debug.Log("Enemy Died");
-        //Die animation
+
+        //play death animation
         anim.SetTrigger("Dead");
 		
 		chaseRange = 0f;
 		enemy_collider.enabled = false;
-		// Make the enemy stop moving
+		// Make the enemy stop moving and disable collider
 		
 
     }

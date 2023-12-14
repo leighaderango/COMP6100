@@ -57,14 +57,4 @@ public class Chest : MonoBehaviour
 
     }
 
-    // private void addForceToItems() 
-    // {   
-    //     foreach(GameObject item in item_prefabs)
-    //     {
-    //         GameObject obj = (GameObject)Instantiate(item, transform.position, Quaternion.identity);
-    //         float x = Random.Range(0.0f, 1.0f);
-    //         float y = Random.Range(0.0f, 1.0f);
-    //         obj.GetComponent<Rigidbody2D>().velocity = new Vector2(x, y);
-    //     }
-    // }
 }

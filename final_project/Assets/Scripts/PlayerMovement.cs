@@ -10,12 +10,12 @@ public class PlayerMovement : MonoBehaviour
 	private float drainRate = 1f;
 	private float rechargeRate = 1f;
 	private bool inventoryOpen = false;
-
 	private Vector2 moveInput;
 	private SpriteRenderer playerSR;
 	private Animator anim;
-	private Canvas inventoryCanvas;
+	
 	// connects player, inventory, and inventory UI
+	private Canvas inventoryCanvas;
 	public Inventory inventory;
 	[SerializeField] private UI_Inventory uiInventory;
 	private GameObject craftingRegion;
@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     }
 	
 	void Update(){
-		if (Input.GetKeyDown(KeyCode.P)){ // Open
+		if (Input.GetKeyDown(KeyCode.P)){ // show or hide crafting canvas
 			craftingRegion.GetComponent<BoxCollider2D>().enabled = !inventoryOpen;
 				// disable craftingRegion collider when inventory is closed
 			inventoryCanvas.enabled = !inventoryOpen;
@@ -64,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
 		
 		if(Input.GetKey(KeyCode.Space))
         {
-			//Debug.Log("Sprinting");
 			if(stamina > 0)
 			{
 				speed = sprintSpeed;
@@ -80,15 +79,14 @@ public class PlayerMovement : MonoBehaviour
             }
 			
 		}
-		//Debug.Log(stamina);
 
 		anim.SetFloat("Speed", Mathf.Abs(moveInput.magnitude));
 
 		// Set y axis animation to run here
 		GetComponent<Rigidbody2D>().velocity = moveInput * speed;
-        //GetComponent<Rigidbody2D>().velocity = new Vector2 (h*speed, v*speed);
     }
 
+	// not utilized, but allows player to pick up items in the world and adds them to the inventory
 	private void OnTriggerEnter2D(Collider2D collider){
 		ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
 		if (itemWorld != null){

@@ -34,6 +34,7 @@ public class DungeonGeneration : MonoBehaviour
         SpawnChunks(path);
         spawner.SpawnChests(WorldPositions);
         spawner.SpawnEnemies(WorldPositions);
+		Time.timeScale = 1;
     }
 
     public void GenerateDungeon()
@@ -111,7 +112,7 @@ public class DungeonGeneration : MonoBehaviour
         Debug.Log("========= WORLD POSITIONS =========");
         foreach (Vector2Int position in secondRoom)
         {
-            Debug.Log(position.x + ", " + position.y);
+            //Debug.Log(position.x + ", " + position.y);
         }
     }
 
