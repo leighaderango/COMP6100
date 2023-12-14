@@ -70,11 +70,11 @@ public class Spawner : MonoBehaviour
             case "S":
                 spawnedController = Instantiate(ControlCollider, new Vector3(10.5f, 0f, 0f), Quaternion.identity);
                 break;
-            case "E":
+            case "W":
                 spawnedController = Instantiate(ControlCollider, new Vector3(20f, 10.5f, 0f), Quaternion.identity);
                 spawnedController.transform.Rotate(0f, 0f, 90f, Space.Self);
                 break;
-            case "W":
+            case "E":
                 spawnedController = Instantiate(ControlCollider, new Vector3(20f, 10.5f, 0f), Quaternion.identity);
                 spawnedController.transform.Rotate(0f, 0f, 90f, Space.Self);
                 break;
