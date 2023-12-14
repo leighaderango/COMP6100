@@ -22,10 +22,6 @@ public class DungeonGeneration : MonoBehaviour
     private List<Vector2Int> secondRoom = new List<Vector2Int>();
     private List<Vector2Int> lastRoom = new List<Vector2Int>();
 
-    // Track the chunk and all its positions.
-    // Spawn 2 rooms.
-    // When the player enters a new door. Spawn the List[room + 1] until we reach the end of the list.
-
     void Start() 
     {
         Reset();
@@ -50,6 +46,7 @@ public class DungeonGeneration : MonoBehaviour
         spawner.SpawnChests(WorldPositions);
         spawner.SpawnEnemies(WorldPositions);
         Time.timeScale = 1;
+        //printWorldPositions();
 
     }
 
@@ -63,25 +60,26 @@ public class DungeonGeneration : MonoBehaviour
             // Pass a world position. Must be IEnumerable so we can use AddRange.
             IEnumerable<Vector2Int> currentChunkFloorPositions = chunk.createChunk(dir, spawnPosition);
             // Combine the last spawned chunk positions with the rest of the World Floor positions.
+
             if (idx >= 2)
             {
                 WorldPositions.AddRange(currentChunkFloorPositions);
             }
-            else if(idx == 10)
+            
+            if (idx == 1)
+            {
+
+                secondRoom.AddRange(currentChunkFloorPositions);
+            }
+
+            if (idx == path.Count-1)
             {
                 lastRoom.AddRange(currentChunkFloorPositions);
+                tp.paintEndRoom(lastRoom[175]);
+                spawner.SpawnEndGameCollider(lastRoom[175]);
             }
-            else
-            {
-                if(idx == 1)
-                {
-                    
-                    secondRoom.AddRange(currentChunkFloorPositions);
-                    printWorldPositions();
-                }
 
-                idx++;
-            }
+            idx++;
 
             // Set spawn position for next chunk
             adjustSpawnPosition(dir);
@@ -117,17 +115,18 @@ public class DungeonGeneration : MonoBehaviour
 
     private void printWorldPositions()
     {
+        int i = 0;
         Debug.Log("========= WORLD POSITIONS =========");
-        foreach (Vector2Int position in secondRoom)
+        foreach (Vector2Int position in lastRoom)
         {
-            //Debug.Log(position.x + ", " + position.y);
+            Debug.Log(i + " => " + position.x + ", " + position.y);
+            i++;
         }
     }
 
-    
-
     public void Reset()
     {
+        lastRoom.Clear();
         tp.Clear();
         spawner.Clear();
         path.Clear();

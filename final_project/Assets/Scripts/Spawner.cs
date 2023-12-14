@@ -7,12 +7,14 @@ public class Spawner : MonoBehaviour
     public List<GameObject> chests = new List<GameObject>();
     public List<GameObject> enemies = new List<GameObject>();
     public GameObject ControlCollider;
+    public GameObject EndGameCollider;
 
     private List<Vector2Int> chestPositions = new List<Vector2Int>();
     
     private List<GameObject> spawnedChests = new List<GameObject>();
     private List<GameObject> spawnedEnemies = new List<GameObject>();
     private GameObject spawnedController;
+    private GameObject spawnedEndCollider;
 
     public int numOfChests = 10;
     public int numOfEnemies = 20;
@@ -60,6 +62,12 @@ public class Spawner : MonoBehaviour
         Debug.Log("Starter chest spawned");
     }
 
+    public void SpawnEndGameCollider(Vector2Int pos)
+    {
+        spawnedEndCollider = Instantiate(EndGameCollider, (Vector3Int)pos, Quaternion.identity);
+
+    }
+
     public void SpawnControlCollider(string dir)
     {
         switch (dir)
@@ -75,7 +83,7 @@ public class Spawner : MonoBehaviour
                 spawnedController.transform.Rotate(0f, 0f, 90f, Space.Self);
                 break;
             case "E":
-                spawnedController = Instantiate(ControlCollider, new Vector3(20f, 10.5f, 0f), Quaternion.identity);
+                spawnedController = Instantiate(ControlCollider, new Vector3(0f, 10.5f, 0f), Quaternion.identity);
                 spawnedController.transform.Rotate(0f, 0f, 90f, Space.Self);
                 break;
         }
@@ -128,7 +136,8 @@ public class Spawner : MonoBehaviour
             DestroyImmediate(obj, true);
         }
        DestroyImmediate(spawnedController, true);
-        chestPositions.Clear();
+       DestroyImmediate(spawnedEndCollider, true);
+       chestPositions.Clear();
     }
     
 }
