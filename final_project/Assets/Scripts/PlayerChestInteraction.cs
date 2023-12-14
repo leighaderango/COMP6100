@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class interactionChest : MonoBehaviour
 {
@@ -26,11 +27,17 @@ public class interactionChest : MonoBehaviour
 		"GreenPotion"};
 	private int randomIndex;
 	private string item;
+	private Transform inventoryTextContainer;
+	private Transform inventoryTemplateTransform;
 	
 
 	void Start(){
 		playerInventory = ui_inventory.GetInventory();
 		Debug.Log(playerInventory);
+		
+		inventoryTextContainer = GameObject.Find("InventoryTextContainer").GetComponent<RectTransform>();
+		inventoryTemplateTransform = inventoryTextContainer.Find("InventoryTextTemplate");
+		
 	}
 
 
@@ -40,24 +47,29 @@ public class interactionChest : MonoBehaviour
 	
         if(Input.GetButtonDown("Interact") & chestColliders.Length != 0) 
         {
-            
-            foreach(Collider2D c in chestColliders)
-            {
-			if (c.tag == "BlueChest" ||  c.tag == "GoldChest" || c.tag == "RedChest"){
-					c.GetComponent<Chest>().isOpen = true;
-					if (c.tag == "BlueChest"){
-						numItems = 1;
-						AddItemsFromChest(numItems);
+            //int chestNum = 0;
+			
+            foreach(Collider2D c in chestColliders){
+				
+					if (c.tag == "BlueChest" ||  c.tag == "GoldChest" || c.tag == "RedChest"){
+						if (c.GetComponent<Chest>().isOpen == false){
+							c.GetComponent<Chest>().isOpen = true;
+							if (c.tag == "BlueChest"){
+								numItems = 1;
+								AddItemsFromChest(numItems);
+							}
+							if (c.tag == "RedChest"){
+								numItems = 2;
+								AddItemsFromChest(numItems);
+							}
+							if (c.tag == "GoldChest"){
+								numItems = 3;
+								AddItemsFromChest(numItems);
+							}
+						}
 					}
-					if (c.tag == "RedChest"){
-						numItems = 2;
-						AddItemsFromChest(numItems);
-					}
-					if (c.tag == "GoldChest"){
-						numItems = 3;
-						AddItemsFromChest(numItems);
-					}
-				}
+				
+			
             }
 		
 			chestColliders = null;
@@ -67,7 +79,11 @@ public class interactionChest : MonoBehaviour
     }
 	
 	private void AddItemsFromChest(int numItems){
-		for (int i = 0; i <= numItems; i++){
+		
+		int y = 0;
+		float textHeightSize = 40f;
+		
+		for (int i = 0; i < numItems; i++){
 			randomIndex = Random.Range(0, generatableItems.Count - 1);
 			item = generatableItems[randomIndex];
 			Debug.Log(item);
@@ -75,29 +91,24 @@ public class interactionChest : MonoBehaviour
 			playerInventory.AddItem(new Item{itemType = Item.GetItemType(item), amount = 1});
 			Debug.Log("added " + item);
 			
-		
-			// add to inventory
+
+			// Instantiate text template in text container
+			RectTransform textRectTransform = Instantiate(inventoryTemplateTransform, inventoryTextContainer).GetComponent<RectTransform>();
+			textRectTransform.gameObject.SetActive(true);
 			// play player visual
+			textRectTransform.anchoredPosition = new Vector2(inventoryTextContainer.position.x, y * textHeightSize);
+			
+			TextMeshProUGUI amountText = textRectTransform.Find("AddInventoryText").GetComponent<TextMeshProUGUI>();
+			amountText.SetText("+1 " + item);
+			
+			y += 1;
+			// Instantiate text object above Health Bar GUI, play animation
 		}
+		
+		
 	}
 
-    // private void OnTriggerEnter2D(Collider2D other) {
-        // Debug.Log("Entered = " + other.name);
 
-        // if(other.name == "chest_red" || other.name == "chest_blue" || other.name == "chest_gold") {
-            // ChestsInRange++;
-            // chestsInArea.Add(other.gameObject);
-        // }
-    // }
-
-    // private void OnTriggerExit2D(Collider2D other) {
-        // Debug.Log("Exited = " + other.name);
-
-         // if(other.name == "chest_red" || other.name == "chest_blue" || other.name == "chest_gold") {
-            // ChestsInRange--;
-            // chestsInArea.Remove(other.gameObject);
-        // }
-    // }
 	
 	    void OnDrawGizmosSelected()
     {

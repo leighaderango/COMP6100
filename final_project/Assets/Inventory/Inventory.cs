@@ -17,13 +17,13 @@ public class Inventory{
 
 		// gives player a base inventory (DELETE LATER)
 		AddItem(new Item {itemType = Item.ItemType.YellowBone, amount = 3});
-		AddItem(new Item {itemType = Item.ItemType.GreenGem, amount = 2});
-		AddItem(new Item {itemType = Item.ItemType.BlueGreenGem, amount = 4});
-		AddItem(new Item {itemType = Item.ItemType.PurpleGem, amount = 2});
-		AddItem(new Item {itemType = Item.ItemType.SilverGem, amount = 6});
+		//AddItem(new Item {itemType = Item.ItemType.GreenGem, amount = 2});
+		//AddItem(new Item {itemType = Item.ItemType.BlueGreenGem, amount = 4});
+		//AddItem(new Item {itemType = Item.ItemType.PurpleGem, amount = 2});
+		//AddItem(new Item {itemType = Item.ItemType.SilverGem, amount = 6});
 		AddItem(new Item {itemType = Item.ItemType.GoldMetal, amount = 2});
-		AddItem(new Item {itemType = Item.ItemType.SilverMetal, amount = 2});
-		AddItem(new Item {itemType = Item.ItemType.Fabric, amount = 11});
+		//AddItem(new Item {itemType = Item.ItemType.SilverMetal, amount = 2});
+		//AddItem(new Item {itemType = Item.ItemType.Fabric, amount = 11});
 
 	}
 	

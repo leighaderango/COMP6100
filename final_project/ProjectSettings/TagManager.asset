@@ -27,6 +27,7 @@ TagManager:
   - BlueChest
   - GoldChest
   - RedChest
+  - Chest
   layers:
   - Default
   - TransparentFX
@@ -75,4 +76,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3679952307
+    locked: 0
+  - name: UI
+    uniqueID: 342899125
     locked: 0

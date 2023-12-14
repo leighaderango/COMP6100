@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
 	// connects player, inventory, and inventory UI
 	public Inventory inventory;
 	[SerializeField] private UI_Inventory uiInventory;
+	private GameObject craftingRegion;
+	
 	
 
     void Start()
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 		playerSR = GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
 		inventoryCanvas = GameObject.Find("InventoryCanvas").GetComponent<Canvas>();
+		craftingRegion = GameObject.Find("CraftingRegion");
 		
         inventory = new Inventory(UseItem);
 		uiInventory.SetInventory(inventory);
@@ -35,8 +38,15 @@ public class PlayerMovement : MonoBehaviour
 	
 	void Update(){
 		if (Input.GetKeyDown(KeyCode.P)){ // Open
+			craftingRegion.GetComponent<BoxCollider2D>().enabled = !inventoryOpen;
+				// disable craftingRegion collider when inventory is closed
 			inventoryCanvas.enabled = !inventoryOpen;
+				// when canvas is enabled, p closes
+				// when canvas is disabled, p opens
 			inventoryOpen = !inventoryOpen;
+				// adjust reference
+			Time.timeScale = inventoryOpen ? 0 : 1;
+				// pause underlying game when inventory is open
 		}
 		
 	}

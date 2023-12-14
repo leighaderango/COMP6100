@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCombat : MonoBehaviour
 {
     public float attackRange = 0.5f;
     public int attackDamage = 30;
-    private int maxHealth = 1000;
+    private int maxHealth = 100;
     private int currentHealth;
     private float cooldown = 1f; //seconds
     private float lastAttackedAt = -9999f;
@@ -15,10 +16,16 @@ public class PlayerCombat : MonoBehaviour
     public Transform attackPoint;
     public LayerMask enemyLayers;
     string attackType;
+	public Slider healthBar;
 
     void Start()
     {
+		healthBar = GameObject.Find("HealthBar").GetComponent<Slider>();
         currentHealth = maxHealth;
+		healthBar.maxValue = maxHealth;
+        healthBar.value = maxHealth;
+		
+	
     }
 
 
@@ -90,6 +97,8 @@ public class PlayerCombat : MonoBehaviour
         {
             Die();
         }
+		
+		healthBar.value = currentHealth;
     }
 
     void Die()
@@ -97,6 +106,11 @@ public class PlayerCombat : MonoBehaviour
         anim.SetTrigger("Death");
         // add losing game ending stuff here
 
+    }
+	
+	private void SetHealth(int hp)
+    {
+        healthBar.value = hp;
     }
 
     void OnDrawGizmosSelected()
@@ -108,4 +122,6 @@ public class PlayerCombat : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+	
+   
 }
