@@ -9,7 +9,6 @@ public class TilePainter : MonoBehaviour
 {
     public Tilemap terrain;
     public TileBase floor;
-    public TileBase end;
     public TileBase[] walls;
 
     /*private int worldSpawnPositionX = 0;
@@ -76,6 +75,55 @@ public class TilePainter : MonoBehaviour
         }
     }
 
+    /*public void VisualizeChunk(string[,] chunk, int size, List<Vector2Int> WallPositions, List<string> TileCodes, string direction)
+    {
+
+        *//*paintAllFloors(chunk, size);
+        paintAllWalls(chunk, size, WallPositions, TileCodes);*//*
+        // Iterate over the chunk and set each tile to the grid.
+        for (int x = 0; x < size; x++)
+        {
+            for (int y = 0; y < size; y++)
+            {
+                switch (chunk[x, y])
+                {
+                    case "0":
+                        // Floor Tile. Set WorldPosition
+                        //paintTile(floor, x + worldSpawnPositionX, y +worldSpawnPositionY);
+                        break;
+                }
+                
+            }
+        }
+
+        paintAllWalls(chunk, size, WallPositions, TileCodes);
+
+        // We know that evey time we call this a chunk has been spawned and the world position must be changed.
+        adjustWorldPosition(direction);
+    }*/
+
+    /*private void adjustWorldPosition(string dir)
+    {
+        char lastChar = dir[dir.Length - 1];
+
+        int increment = 20;
+        switch (lastChar)
+        {
+            case 'N':
+                worldSpawnPositionY = worldSpawnPositionY + increment;
+                break;
+            case 'S':
+                worldSpawnPositionY = worldSpawnPositionY - increment;
+                break;
+            case 'E':
+                worldSpawnPositionX = worldSpawnPositionX + increment;
+                break;
+            case 'W':
+                worldSpawnPositionX = worldSpawnPositionX - increment;
+                break;
+        }
+    }*/
+
     public void printWallPositions(List<Vector2Int> wp)
     {
         foreach(Vector2Int wall in wp)
@@ -110,11 +158,6 @@ public class TilePainter : MonoBehaviour
         //Debug.Log("Tile Position = (" + tilePosition.x + ", " + tilePosition.y + ")");
 
         terrain.SetTile(tilePosition, tile);
-    }
-
-    public void paintEndRoom(Vector2Int endPosition)
-    {
-        paintTile(end, endPosition.x, endPosition.y);
     }
 
     public void Clear()
