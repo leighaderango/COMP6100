@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 	public Inventory inventory;
 	[SerializeField] private UI_Inventory uiInventory;
 	private GameObject craftingRegion;
-	
+	private GameObject beginningText;
 	
 
     void Start()
@@ -33,7 +33,8 @@ public class PlayerMovement : MonoBehaviour
 		uiInventory.SetInventory(inventory);
 			// initializes inventory and connects it to the UI
 		
-		
+
+		//beginningText.gameObject.SetActive(true);
     }
 	
 	void Update(){

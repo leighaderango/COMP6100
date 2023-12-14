@@ -1,0 +1,21 @@
+References
+
+"Simple Inventory System in Unity (Store, Use, Stack and Drop Items)."
+	YouTube, uploaded by CodeMonkey, 25 October 2019, https://www.youtube.com/watch?v=2WnAOV7nHW0.
+	
+	Adapted for inventory system
+	Took as inspiration for crafting system, which was done independently
+	
+"Simple Drag Drop (Unity Tutorial for Beginners)." 
+	Youtube, uploaded by CodeMonkey, 15 November 2019, https://www.youtube.com/watch?v=BGr-7GZJNXg.
+	
+	Adapted for inventory system
+
+
+	
+Game Assets
+Petahja font: https://www.fontsquirrel.com/fonts/petahja
+Skeleton, Goblin and Flying Eye enemies: https://luizmelo.itch.io/monsters-creatures-fantasy
+Necromancer enemy: https://creativekind.itch.io/necromancer-free
+Crafting Icons: https://dusk-games.itch.io/dusk-fantasy-icons
+UI Elements: https://humblepixel.itch.io/pocket-inventory-series-5-player-status/devlog/511319/free-paper-ui-system

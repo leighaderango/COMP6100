@@ -95,6 +95,7 @@ public class Enemy : MonoBehaviour
         } else{
 			 anim.SetTrigger("Damaged");  // if attacked but not dead, play animation
 		}
+		Debug.Log("EnemyHealth" + currentHealth);
     }
 
 	// executes when enemy health reaches 0

@@ -15,6 +15,7 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 	private Item pfItemWorld;
 	private Vector2 crafterTag;
 	private Animator anim;
+	private PlayerCombat player;
 	
 	// nested dictionary of crafting recipes
 	private Dictionary<string, Dictionary<string, int>> recipes = new Dictionary<string, Dictionary<string, int>>{
@@ -41,6 +42,7 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 			// connect to player inventory
 		anim = gameObject.GetComponent<Animator>();
 			// access animator for cauldron fire
+		player = GameObject.Find("Player").GetComponent<PlayerCombat>();
 	}
 
 
@@ -136,6 +138,31 @@ public class CraftingRegion : MonoBehaviour, IDropHandler {
 			}
 			
 			ui_inventory.RefreshInventoryItems();
+			
+			if (createdItem == "Sword_1"){
+				player.attackDamage = 25;
+			}else if (createdItem == "Sword_2"){
+				player.attackDamage = 30;
+			}else if (createdItem == "Armor_Green"){
+				player.maxHealth = 125;
+				player.currentHealth = 125;
+			}else if (createdItem == "Armor_Purple"){
+				player.maxHealth = 150;
+				player.currentHealth = 150;
+			}else if (createdItem == "SilverPotion"){
+				if (player.currentHealth <= 80){
+					player.currentHealth += 20;	
+				} else{
+					player.currentHealth = 100;
+				}
+			}else if (createdItem == "GreenPotion"){
+				if (player.currentHealth <= 70){
+					player.currentHealth += 30;
+				} else {
+					player.currentHealth = 100;
+				}			
+			} 
+			 		
 			
 		} 
 		

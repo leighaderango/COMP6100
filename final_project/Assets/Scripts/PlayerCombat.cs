@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class PlayerCombat : MonoBehaviour
 {
-    public float attackRange = 0.5f;
-    public int attackDamage = 30;
-    private int maxHealth = 100;
-    private int currentHealth;
+    public float attackRange = 1f;
+    public int attackDamage = 20;
+    public int maxHealth = 100;
+    public int currentHealth;
     private float cooldown = 1f; //seconds
     private float lastAttackedAt = -9999f;
 
@@ -90,6 +90,7 @@ public class PlayerCombat : MonoBehaviour
         }
 		
 		healthBar.value = currentHealth; // update health bar value
+		Debug.Log("Player Health" + currentHealth);
     }
 
     void Die(){
