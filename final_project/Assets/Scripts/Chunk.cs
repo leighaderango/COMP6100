@@ -11,6 +11,8 @@ public class Chunk : MonoBehaviour
     // Local position for the tiles in the chunk.
     public static int size = 20;
     private static string[,] grid = new string[size, size];
+
+
     public TilePainter tilePainter;
     public int numberOfChests = 1;
 
@@ -25,8 +27,6 @@ public class Chunk : MonoBehaviour
 
     // World Floor position of tiles.
     private List<Vector2Int> FloorPositions = new List<Vector2Int>();
-    
-    // Position for the tile painter so it can place the last tile.
 
     public IEnumerable<Vector2Int> createChunk(string direction, Vector2Int spawnPosition)
     {
@@ -34,9 +34,8 @@ public class Chunk : MonoBehaviour
         initializeChunkGrid(spawnPosition, direction);
         createDungeonWalls();
         tilePainter.VisualizeChunk(FloorPositions, WallPositions, TileCodes, size);
-        
         //printPositions();
-        
+
         return FloorPositions;
     }
 
@@ -96,7 +95,7 @@ public class Chunk : MonoBehaviour
                     grid[x, y] = "0";
                     FloorPositions.Add(currentilePosition);
                     WallPositions.Remove(currentilePosition);
-                }                
+                }
 
             }
         }
@@ -159,5 +158,12 @@ public class Chunk : MonoBehaviour
         DoorDirections.Clear();
         
         // tilePainter.Clear();
+    }
+
+    public List<Vector2Int> lastLevelInfo()
+    {
+
+
+        return new List<Vector2Int>();  
     }
 }

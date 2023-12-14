@@ -17,10 +17,10 @@ public class DungeonGeneration : MonoBehaviour
 
     // Path Directions
     private List<string> path = new List<string>();
-    private List<Vector2Int> WorldPositions = new List<Vector2Int>();
+    public List<Vector2Int> WorldPositions;
     private Vector2Int spawnPosition = new Vector2Int();
+    private List<Vector2Int> firstRoom = new List<Vector2Int>();
     private List<Vector2Int> secondRoom = new List<Vector2Int>();
-    private List<Vector2Int> lastRoom = new List<Vector2Int>();
 
     // Track the chunk and all its positions.
     // Spawn 2 rooms.
@@ -31,11 +31,10 @@ public class DungeonGeneration : MonoBehaviour
         Reset();
         spawnPosition = new Vector2Int(0, 0);
         path = algorithm.GeneratePathDirections();
-        SpawnChunks(path);  // For loop that spawns all the chunks.
-        spawner.starterChest();
+        SpawnChunks(path);
         spawner.SpawnChests(WorldPositions);
         spawner.SpawnEnemies(WorldPositions);
-        Time.timeScale = 1;
+		Time.timeScale = 1;
     }
 
     public void GenerateDungeon()
@@ -43,12 +42,11 @@ public class DungeonGeneration : MonoBehaviour
         Reset();
         spawnPosition = new Vector2Int(0,0);
         path = algorithm.GeneratePathDirections();
-        SpawnChunks(path);  // For loop that spawns all the chunks.
+        SpawnChunks(path);
         spawner.starterChest();
-        spawner.SpawnControlCollider(path[0]);
         spawner.SpawnChests(WorldPositions);
         spawner.SpawnEnemies(WorldPositions);
-        Time.timeScale = 1;
+
     }
 
 
@@ -65,10 +63,6 @@ public class DungeonGeneration : MonoBehaviour
             {
                 WorldPositions.AddRange(currentChunkFloorPositions);
             }
-            else if (idx == 10)
-            {
-                lastRoom.AddRange(currentChunkFloorPositions);
-            }
             else
             {
                 if(idx == 1)
@@ -80,7 +74,6 @@ public class DungeonGeneration : MonoBehaviour
 
                 idx++;
             }
-
 
             // Set spawn position for next chunk
             adjustSpawnPosition(dir);
