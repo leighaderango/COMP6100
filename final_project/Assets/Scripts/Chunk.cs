@@ -12,7 +12,6 @@ public class Chunk : MonoBehaviour
     public static int size = 20;
     private static string[,] grid = new string[size, size];
 
-
     public TilePainter tilePainter;
     public int numberOfChests = 1;
 
@@ -158,12 +157,5 @@ public class Chunk : MonoBehaviour
         DoorDirections.Clear();
         
         // tilePainter.Clear();
-    }
-
-    public List<Vector2Int> lastLevelInfo()
-    {
-
-
-        return new List<Vector2Int>();  
     }
 }

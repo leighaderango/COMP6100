@@ -6,11 +6,13 @@ public class Spawner : MonoBehaviour
 {
     public List<GameObject> chests = new List<GameObject>();
     public List<GameObject> enemies = new List<GameObject>();
+    public GameObject ControlCollider;
 
     private List<Vector2Int> chestPositions = new List<Vector2Int>();
     
     private List<GameObject> spawnedChests = new List<GameObject>();
     private List<GameObject> spawnedEnemies = new List<GameObject>();
+    private GameObject spawnedController;
 
     public int numOfChests = 10;
     public int numOfEnemies = 20;
@@ -56,6 +58,27 @@ public class Spawner : MonoBehaviour
         obj.name = "chest_gold";
         spawnedChests.Add(obj);
         Debug.Log("Starter chest spawned");
+    }
+
+    public void SpawnControlCollider(string dir)
+    {
+        switch (dir)
+        {
+            case "N":
+                spawnedController = Instantiate(ControlCollider, new Vector3(10.5f, 20f, 0f), Quaternion.identity);
+                break;
+            case "S":
+                spawnedController = Instantiate(ControlCollider, new Vector3(10.5f, 0f, 0f), Quaternion.identity);
+                break;
+            case "E":
+                spawnedController = Instantiate(ControlCollider, new Vector3(20f, 10.5f, 0f), Quaternion.identity);
+                spawnedController.transform.Rotate(0f, 0f, 90f, Space.Self);
+                break;
+            case "W":
+                spawnedController = Instantiate(ControlCollider, new Vector3(20f, 10.5f, 0f), Quaternion.identity);
+                spawnedController.transform.Rotate(0f, 0f, 90f, Space.Self);
+                break;
+        }
     }
 
     public void SpawnChests(List<Vector2Int> availableSpawnPositions)
@@ -104,6 +127,7 @@ public class Spawner : MonoBehaviour
        {
             DestroyImmediate(obj, true);
         }
+       DestroyImmediate(spawnedController, true);
         chestPositions.Clear();
     }
     

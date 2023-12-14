@@ -2951,6 +2951,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8815487941507238763, guid: e4bef8bfc0190084aae70394542f3e31, type: 3}
+      propertyPath: ControlCollider
+      value: 
+      objectReference: {fileID: 4269959604624339517, guid: 2c66183cf8e76ae44b05df0eb14cf6d9, type: 3}
+    - target: {fileID: 8815487941507238763, guid: e4bef8bfc0190084aae70394542f3e31, type: 3}
       propertyPath: chests.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -3132,6 +3136,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TilePainter
       objectReference: {fileID: 0}
+    - target: {fileID: 8729950498282507651, guid: f45fa452b9cf42949ae17bd573d4221a, type: 3}
+      propertyPath: end
+      value: 
+      objectReference: {fileID: 11400000, guid: db03d59114935814b8a49f7bf10c766b, type: 2}
     - target: {fileID: 8729950498282507651, guid: f45fa452b9cf42949ae17bd573d4221a, type: 3}
       propertyPath: terrain
       value: 
