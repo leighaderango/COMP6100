@@ -18,6 +18,7 @@ public class Algorithms : MonoBehaviour
         string currentDirection = directions[Random.Range(0, directions.Count)];
         // Add initial direction to path
         path = path + currentDirection;
+        pathLength--;
         // {N, SN, SW, E}
         for (int i = 0; i < pathLength; i++)
         {   

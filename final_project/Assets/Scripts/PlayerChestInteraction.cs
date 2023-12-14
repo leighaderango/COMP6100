@@ -27,6 +27,7 @@ public class interactionChest : MonoBehaviour
 		"Fabric", 	
 		"SilverPotion", 
 		"GreenPotion"};
+
 	// used for UI animation to show player what was in the chest
 	private int randomIndex;
 	private string item;
