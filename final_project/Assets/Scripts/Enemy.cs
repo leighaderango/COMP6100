@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
 	private Collider2D[] player; // player's collider (if in chase range)
 	private Collider2D[] attackPlayer; // player's collider (if in attack range)
 	private GameObject playerObject; 
+
+
 	
 
     void Start()
@@ -31,9 +33,12 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
 		enemy_collider = gameObject.GetComponent<BoxCollider2D>();
 		playerObject = GameObject.FindWithTag("Player");
+
     }
 	
 	void Update(){
+		
+
 		player = null; // reset player array to constantly monitor movement
 		float step = speed * Time.deltaTime;
 		
@@ -52,7 +57,7 @@ public class Enemy : MonoBehaviour
 			anim.SetFloat("Speed", 0f);
 			// if not in range, stay in place
 		}
-		
+
 		// detect if player is in range of attack
 		attackPlayer = Physics2D.OverlapCircleAll(transform.position, attackRange, PlayerLayer);
 		
